@@ -1,71 +1,82 @@
-###################
-What is CodeIgniter
-###################
+.. |br| raw:: html
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+   <br />
 
-*******************
-Release Information
-*******************
+|br|
+|br|
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+==========
+README
+==========
 
-**************************
-Changelog and New Features
-**************************
+|br|
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+.. image:: https://img.shields.io/badge/Project-Travel%20Management%20System-blue
+   :alt: Project Badge
 
-*******************
-Server Requirements
-*******************
+|br|
 
-PHP version 5.6 or newer is recommended.
+How to Run the Project
+======================
 
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
+This project requires a **local server environment** to run, such as XAMPP. Follow the steps below to set it up:
 
-************
-Installation
-************
+---------------------------------------------------
 
-Please see the `installation section <https://codeigniter.com/userguide3/installation/index.html>`_
-of the CodeIgniter User Guide.
+**1. Install Dependencies (XAMPP)**
+---------------------------------------------------
 
-*******
-License
-*******
+Install the latest version of **XAMPP** from the official website:
 
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
+:download:`XAMPP Download <https://www.apachefriends.org/download.html>`
 
-*********
-Resources
-*********
+|br|
 
--  `User Guide <https://codeigniter.com/docs>`_
--  `Contributing Guide <https://github.com/bcit-ci/CodeIgniter/blob/develop/contributing.md>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
+---------------------------------------------------
 
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
+**2. Start Services**
+---------------------------------------------------
 
-***************
-Acknowledgement
-***************
+Start the **Apache** and **MySQL** services from the XAMPP control panel.
 
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+|br|
+
+---------------------------------------------------
+
+**3. Prepare the Database**
+---------------------------------------------------
+
+a. Open your web browser and navigate to `http://localhost/phpmyadmin`.
+
+b. Create a new database named **`travel`**.
+
+c. Import the **`travel.sql`** file (located in the project directory) into the newly created **`travel`** database.
+
+|br|
+
+---------------------------------------------------
+
+**4. Deploy Project Files**
+---------------------------------------------------
+
+Place the entire project directory into the **`htdocs`** folder of your XAMPP installation (the typical path is `C:\xampp\htdocs`).
+
+|br|
+
+---------------------------------------------------
+
+**5. Access the Project**
+---------------------------------------------------
+
+Open your web browser and navigate to the following URL to access the travel management system:
+
+`http://localhost/travel`
+
+|br|
+
+---------------------------------------------------
+
+**6. Enjoy!**
+---------------------------------------------------
+
+Enjoy using the **travel management system**!
