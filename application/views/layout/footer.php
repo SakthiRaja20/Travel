@@ -352,20 +352,98 @@
 
 
 <footer>
-        <h2>Subscribe & <br> get special discount</h2>
-        <p>Adventure is just a click away! Be the first to know about new destinations, travel inspiration, and exclusive discounts delivered straight to your inbox</p>
-        <div class="input">
-            <input type="text" placeholder="Enter your Email Address">
-            <button>Subscribe</button>
+    <div class="footer-container">
+        <!-- Newsletter Section -->
+        <div class="footer-newsletter">
+            <h2>Subscribe & Get Special Discounts</h2>
+            <p>Be the first to know about new destinations, travel inspiration, and exclusive deals</p>
+            <div class="newsletter-input">
+                <input type="email" placeholder="Enter your email address" id="newsletter-email">
+                <button onclick="subscribeNewsletter()">Subscribe</button>
+            </div>
         </div>
-        <ul>
-            <li>7823 <br> <h6>Years Serving the travel Industry</h6></li>
-            <li>6374 <br><h6>Global <br> Partnership</h6> </li>
-            <li>1496 <br> <h6>Industry Awards since 2022</h6></li>
-            <li>5658 <br> <h6>Subscribe</h6></li>
-        </ul>
-    </footer>
-    <!-- <script src="app.js"></script> -->
+
+        <!-- Footer Links -->
+        <div class="footer-links">
+            <div class="footer-column">
+                <h3>Wide Ways</h3>
+                <p class="footer-desc">Your trusted travel companion for discovering amazing destinations around the world.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="<?= base_url('/');?>">Home</a></li>
+                    <li><a href="<?= base_url('Welcome/destinations');?>">Destinations</a></li>
+                    <li><a href="<?= base_url('Welcome/order');?>">My Bookings</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Popular Destinations</h4>
+                <ul>
+                    <li><a href="javascript:void(0);" onclick="exploreFooterCity('Jaipur')">Jaipur</a></li>
+                    <li><a href="javascript:void(0);" onclick="exploreFooterCity('Delhi')">Delhi</a></li>
+                    <li><a href="javascript:void(0);" onclick="exploreFooterCity('Goa')">Goa</a></li>
+                    <li><a href="javascript:void(0);" onclick="exploreFooterCity('Mumbai')">Mumbai</a></li>
+                    <li><a href="<?= base_url('Welcome/destinations');?>">View All</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Contact Info</h4>
+                <ul class="footer-contact">
+                    <li><i class="bi bi-geo-alt-fill"></i> 123 Travel Street, City</li>
+                    <li><i class="bi bi-telephone-fill"></i> +1 234 567 890</li>
+                    <li><i class="bi bi-envelope-fill"></i> info@wideways.com</li>
+                    <li><i class="bi bi-clock-fill"></i> Mon - Fri: 9:00 - 18:00</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>&copy; 2025 Wide Ways. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function subscribeNewsletter() {
+        const email = document.getElementById('newsletter-email').value;
+        if (email && email.includes('@')) {
+            alert('Thank you for subscribing!');
+            document.getElementById('newsletter-email').value = '';
+        } else {
+            alert('Please enter a valid email address');
+        }
+    }
+
+    // Function to explore destination from footer
+    function exploreFooterCity(city) {
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        const startDate = today.toISOString().split('T')[0];
+        const endDate = tomorrow.toISOString().split('T')[0];
+        
+        window.location.href = `<?php echo base_url('Welcome/result');?>?${city}?${startDate}?${endDate}?2`;
+    }
+</script>
     
 </body>
 

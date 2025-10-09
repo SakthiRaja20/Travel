@@ -114,11 +114,16 @@ INSERT INTO `hotels` (`id`, `name`, `description`, `city`, `rate`, `mrp`, `disco
 (58, 'W Goa', 'Stylish and vibrant hotel for a fun experience', 'Goa', 4.50, 13000.00, 20.00, 'Vagator Beach, Goa', 15.550400, 73.741400, 'Outdoor Pool, Bar', 'Vegan, Buffet, Continental', 'w_goa_poster.jpg', 'w_goa_room1.jpg, w_goa_room2.jpg', 60, '2025-02-21 18:17:20'),
 (59, 'Vivanta by Taj - Panaji', 'Modern hotel with great views of the river', 'Goa', 4.60, 15000.00, 18.00, 'Panaji, Goa', 15.498700, 73.823100, 'Bar, Spa, Pool', 'Buffet, Continental, Vegan', 'vivanta_poster.jpg', 'vivanta_room1.jpg, vivanta_room2.jpg', 110, '2025-02-21 18:17:20'),
 (60, 'Marbella Beach Resort', 'A charming resort with serene surroundings', 'Goa', 4.40, 11000.00, 15.00, 'Cavelossim, Goa', 15.242700, 73.929400, 'Pool, Restaurant', 'Indian, Seafood, Continental', 'marbella_poster.jpg', 'marbella_room1.jpg, marbella_room2.jpg', 90, '2025-02-21 18:17:20'),
-(61, 'asddsf', 'dfdsfg', '', 0.00, 435435.00, 999.99, '45.45', 22.650000, 77.220000, 'sdffd', 'dfsgf', '34b05b7118e106cacd998e2ca1dfe86c.png', '19cf93255ea506c9a88ce3ab1b0fc8de.png,4e7dbd70c066f09db63ea8afad1f70be.png', 56, '2025-06-21 12:49:47'),
-(62, 'fgdfg', 'fdgdfg', '', 0.00, 4565.00, 546.00, 'dffdg', 56.460000, 56.760000, 'dfg', 'dfg', '933c6bbdf54026487bf209299f9f486d.jpg', 'hotels?#,hotels?#', 56, '2025-06-21 12:51:03'),
-(63, 'fgjhk', 'jkjhk', '', 546.00, 546.00, 56.00, 'ghgfh', 22.650000, 77.220000, 'tyr', 'urtuy', '144877e6ed0643747af9493bcff0086a.png', '46d1947bbd207f7276b847a626c47b02.png,802ccf894576afea8fd5b96d3d65c5a4.png', 20, '2025-06-21 12:57:26'),
-(64, 'fgjhk', 'jkjhk', '', 546.00, 546.00, 56.00, 'ghgfh', 22.650000, 77.220000, 'tyr', 'urtuy', '144877e6ed0643747af9493bcff0086a.png', '46d1947bbd207f7276b847a626c47b02.png,802ccf894576afea8fd5b96d3d65c5a4.png', 20, '2025-06-21 12:58:44'),
-(65, 'drydry', 'rtyt', 'rtytry', 546.00, 547.00, 999.99, 'tytry', 22.650000, 77.220000, 'tytry', 'tyrty', '6bf5b2bbcebf5f8dba71f42c68557119.png', 'fa05e7f50267cd707a00b53278e7bc20.png,f1263d86c24525a33f37aff3aa3f8562.png', 15, '2025-06-21 13:00:07');
+(61, 'The Taj Mahal Palace', 'Iconic luxury hotel overlooking the Gateway of India', 'Mumbai', 4.90, 28000.00, 12.00, 'Apollo Bunder, Colaba, Mumbai', 18.921700, 72.833100, 'Spa, Pool, Fine Dining', 'Continental, Indian, Seafood', 'taj_mumbai_poster.jpg', 'taj_mumbai_room1.jpg, taj_mumbai_room2.jpg', 85, '2025-02-21 18:17:20'),
+(62, 'The Oberoi Mumbai', 'Contemporary luxury with stunning sea views', 'Mumbai', 4.80, 25000.00, 15.00, 'Nariman Point, Mumbai', 18.925700, 72.823300, 'Gym, Spa, Rooftop Bar', 'Buffet, Indian, Continental', 'oberoi_mumbai_poster.jpg', 'oberoi_mumbai_room1.jpg, oberoi_mumbai_room2.jpg', 90, '2025-02-21 18:17:20'),
+(63, 'ITC Grand Central', 'Elegant hotel in the heart of Mumbai', 'Mumbai', 4.70, 18000.00, 18.00, 'Parel, Mumbai', 19.010800, 72.837900, 'Pool, Spa, Business Center', 'Indian, Continental, Vegan', 'itc_mumbai_poster.jpg', 'itc_mumbai_room1.jpg, itc_mumbai_room2.jpg', 100, '2025-02-21 18:17:20'),
+(64, 'JW Marriott Mumbai', 'Luxury hotel near the airport', 'Mumbai', 4.60, 16000.00, 14.00, 'Juhu, Mumbai', 19.102300, 72.828800, 'Outdoor Pool, Gym', 'Buffet, Seafood, Continental', 'marriott_mumbai_poster.jpg', 'marriott_mumbai_room1.jpg, marriott_mumbai_room2.jpg', 110, '2025-02-21 18:17:20'),
+(65, 'Hotel Marine Plaza', 'Beachfront hotel with Art Deco charm', 'Mumbai', 4.40, 12000.00, 20.00, 'Marine Drive, Mumbai', 18.943200, 72.823400, 'Rooftop Restaurant, Bar', 'Indian, Continental, Chinese', 'marine_poster.jpg', 'marine_room1.jpg, marine_room2.jpg', 80, '2025-02-21 18:17:20'),
+(66, 'Trident Nariman Point', 'Business hotel with elegant interiors', 'Mumbai', 4.50, 14000.00, 16.00, 'Nariman Point, Mumbai', 18.926500, 72.823000, 'Spa, Pool, Wi-Fi', 'Indian, Vegan, Buffet', 'trident_mumbai_poster.jpg', 'trident_mumbai_room1.jpg, trident_mumbai_room2.jpg', 95, '2025-02-21 18:17:20'),
+(67, 'The Leela Mumbai', 'Luxurious hotel near the airport', 'Mumbai', 4.70, 22000.00, 10.00, 'Andheri East, Mumbai', 19.113700, 72.868800, 'Spa, Fine Dining, Pool', 'Continental, Indian, Pan-Asian', 'leela_mumbai_poster.jpg', 'leela_mumbai_room1.jpg, leela_mumbai_room2.jpg', 75, '2025-02-21 18:17:20'),
+(68, 'Hyatt Regency Mumbai', 'Modern hotel with great connectivity', 'Mumbai', 4.30, 10000.00, 15.00, 'Santacruz East, Mumbai', 19.089100, 72.865500, 'Gym, Pool, Restaurant', 'Buffet, Indian, Continental', 'hyatt_mumbai_poster.jpg', 'hyatt_mumbai_room1.jpg, hyatt_mumbai_room2.jpg', 105, '2025-02-21 18:17:20'),
+(69, 'Novotel Mumbai', 'Stylish hotel in the business district', 'Mumbai', 4.20, 8500.00, 18.00, 'Juhu Beach, Mumbai', 19.105900, 72.828300, 'Pool, Bar, Wi-Fi', 'Indian, Continental, Seafood', 'novotel_mumbai_poster.jpg', 'novotel_mumbai_room1.jpg, novotel_mumbai_room2.jpg', 120, '2025-02-21 18:17:20'),
+(70, 'Fariyas Hotel Mumbai', 'Comfortable stay near business hubs', 'Mumbai', 4.10, 7000.00, 20.00, 'Colaba, Mumbai', 18.921200, 72.829600, 'Restaurant, Room Service', 'Indian, Continental, Chinese', 'fariyas_poster.jpg', 'fariyas_room1.jpg, fariyas_room2.jpg', 90, '2025-02-21 18:17:20');
 
 -- --------------------------------------------------------
 
@@ -181,7 +186,7 @@ ALTER TABLE `book`
 -- AUTO_INCREMENT for table `hotels`
 --
 ALTER TABLE `hotels`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `users`

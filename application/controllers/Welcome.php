@@ -41,6 +41,11 @@ class Welcome extends CI_Controller {
 		$this->load->view('order');
 	}
 
+	public function destinations()
+	{
+		$this->load->view('destinations');
+	}
+
 	public function hotelAmenities()
 	{
 		$inputData = json_decode(file_get_contents('php://input'), true);

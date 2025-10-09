@@ -18,8 +18,9 @@
         <nav>
             <h4>Wide ways</h4>
             <ul id="menu_bx">
-                <li><a href="<?= base_url('/');?>">Discover</a></li>
-                <li><a href="<?= base_url('/order');?>">Bookings</a></li>
+                <li><a href="<?= base_url('/');?>">Home</a></li>
+                <li><a href="<?= base_url('Welcome/destinations');?>">Destinations</a></li>
+                <li><a href="<?= base_url('Welcome/order');?>">Bookings</a></li>
 
                 <?php 
                 if (empty($this->session->userdata('userdata'))) {

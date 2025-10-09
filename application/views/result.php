@@ -2,44 +2,16 @@
 <?php $this->load->view('layout/header');?>
 <!-- Main Content  -->
 
-<style>
-    header {
-    height: auto;
-}
-    header .content .cont_bx {
-    width: 600px;
-    height: auto;
-    color: #fff;
-    padding: 30px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-header .content .cont_bx h1 , p {
-    text-align: center;
-    margin: 0
-}
-header .content .cont_bx p {
-    margin-top: 10px;
-}
-
-header .trip_bx .search_bx {
-    width: 80%;
-    position: relative;
-    left: 10%;
-    top: -2.5vh;
-}
-</style>
-<div class="content">
-            <div class="cont_bx">
-                <h1>The right destination for you and your family</h1>
-                <p>Creative taglines have the capability of capturing the attention of potential costumer.</p>
-            </div>
-            <div class="trip_bx">
-                <div class="search_bx">
+<main style="flex: 1;">
+<header>
+    <div class="content">
+        <div class="cont_bx">
+            <h1>Find Your Perfect Destination</h1>
+            <p>Discover amazing places and create unforgettable memories</p>
+        </div>
+        <div class="trip_bx">
+            <div class="search_bx">
+                <div class="search-fields">
                     <div class="card">
                         <h4>Location <i class="bi bi-caret-down-fill"></i></h4>
                         <input type="text" placeholder="Enter your destination" id="destination">
@@ -56,28 +28,28 @@ header .trip_bx .search_bx {
                         <h4>People <i class="bi bi-caret-down-fill"></i></h4>
                         <input type="number" placeholder="How many People?" id="people">
                     </div>
-                    <input type="button" value="Explore Now" id="submit">
                 </div>
-
-                <script>
-                    let destination = document.getElementById('destination');
-                    let startDate = document.getElementById('startDate');
-                    let endDate = document.getElementById('endDate');
-                    let people = document.getElementById('people');
-                    let submit = document.getElementById('submit');
-
-
-                    submit.addEventListener('click' , () => {
-                        if (destination.value != '' && startDate.value != '' && endDate.value != '' && people.value != '') {
-                           window.location.href = `<?php echo base_url('welcome/result');?>?${destination.value}?${startDate.value}?${endDate.value}?${people.value}`;
-                        } else {
-                            alert('Please Fill all inputs')
-                        }
-                    })
-                </script>
+                <input type="button" value="Explore Now" id="submit">
             </div>
+
+            <script>
+                let destination = document.getElementById('destination');
+                let startDate = document.getElementById('startDate');
+                let endDate = document.getElementById('endDate');
+                let people = document.getElementById('people');
+                let submit = document.getElementById('submit');
+
+                submit.addEventListener('click' , () => {
+                    if (destination.value != '' && startDate.value != '' && endDate.value != '' && people.value != '') {
+                       window.location.href = `<?php echo base_url('welcome/result');?>?${destination.value}?${startDate.value}?${endDate.value}?${people.value}`;
+                    } else {
+                        alert('Please Fill all inputs')
+                    }
+                })
+            </script>
         </div>
-    </header>
+    </div>
+</header>
 
 
     <style>
@@ -451,6 +423,7 @@ header .trip_bx .search_bx {
 
     </script>
 
+</main>
 
     <!-- Footer  -->
     <?php $this->load->view('layout/footer');?>

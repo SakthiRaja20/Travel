@@ -2,6 +2,7 @@
 <?php $this->load->view('layout/header');?>
 <!-- Main Content  -->
 
+<main style="flex: 1;">
 <style>
     .hotelBook {
         width: 90%;
@@ -198,11 +199,63 @@
        background: transparent;
        color: #037b83;
     }
+    
+    .hotelBook {
+        min-height: 60vh;
+    }
+    
+    .empty-bookings {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 2rem;
+        text-align: center;
+        min-height: 50vh;
+    }
+    
+    .empty-bookings i {
+        font-size: 5rem;
+        color: #037b83;
+        margin-bottom: 1.5rem;
+        opacity: 0.3;
+    }
+    
+    .empty-bookings h3 {
+        font-size: 1.8rem;
+        color: #2f2f2f;
+        margin-bottom: 0.8rem;
+        font-weight: 600;
+    }
+    
+    .empty-bookings p {
+        font-size: 1rem;
+        color: #8d8d8d;
+        margin-bottom: 2rem;
+        max-width: 400px;
+    }
+    
+    .empty-bookings .explore-btn {
+        padding: 12px 32px;
+        background: #037b83;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: 2px solid #037b83;
+    }
+    
+    .empty-bookings .explore-btn:hover {
+        background: transparent;
+        color: #037b83;
+    }
 </style>
 
 <!-- Hotel Book  -->
  <div class="hotelBook">
    <h4>Booking Details</h4>
+   <div id="bookingsContainer"></div>
  </div>
 
 
@@ -231,11 +284,11 @@
 
         const data = await response.json();
 
-        if (data) {
+        if (data && data[0] && data[0].length > 0) {
             console.log(data);
 
 
-            let hotelBook = document.getElementsByClassName('hotelBook')[0];
+            let bookingsContainer = document.getElementById('bookingsContainer');
 
 
              // Booking Details 
@@ -327,14 +380,39 @@
         </div>
         `;
 
-        hotelBook.appendChild(bookingDetails);
+        bookingsContainer.appendChild(bookingDetails);
         });
 
         
 
+        } else {
+            // Show empty state placeholder
+            let bookingsContainer = document.getElementById('bookingsContainer');
+            bookingsContainer.innerHTML = `
+                <div class="empty-bookings">
+                    <i class="bi bi-calendar-x"></i>
+                    <h3>No Bookings Yet</h3>
+                    <p>You haven't made any bookings yet. Start exploring amazing destinations and create your perfect travel experience!</p>
+                    <a href="<?php echo base_url('Welcome'); ?>" class="explore-btn">
+                        <i class="bi bi-compass"></i> Explore Destinations
+                    </a>
+                </div>
+            `;
         }
     } catch (error) {
         console.error(error);
+        // Show error state
+        let bookingsContainer = document.getElementById('bookingsContainer');
+        bookingsContainer.innerHTML = `
+            <div class="empty-bookings">
+                <i class="bi bi-exclamation-triangle"></i>
+                <h3>Oops! Something went wrong</h3>
+                <p>We couldn't load your bookings. Please try refreshing the page.</p>
+                <a href="javascript:location.reload()" class="explore-btn">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh Page
+                </a>
+            </div>
+        `;
     }
 
    }
@@ -345,6 +423,8 @@
 
   
  </script>
+
+</main>
 
 <!-- Footer  -->
   <?php $this->load->view('layout/footer');?>

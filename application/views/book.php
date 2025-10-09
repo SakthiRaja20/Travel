@@ -2,6 +2,7 @@
 <?php $this->load->view('layout/header');?>
 <!-- Main Content  -->
 
+<main style="flex: 1;">
 <style>
     .hotelBook {
         width: 90%;
@@ -481,6 +482,8 @@
 
    }
  </script>
+
+</main>
 
 <!-- Footer  -->
   <?php $this->load->view('layout/footer');?>

@@ -1,6 +1,7 @@
 <!-- Header  -->
 <?php $this->load->view('layout/header');?>
 
+<main style="flex: 1;">
 <!-- Hero Section Wrapper -->
 <section class="hero-wrapper">
     <div class="hero-section">
@@ -50,6 +51,18 @@
                             alert('Please Fill all inputs')
                         }
                     })
+
+                    // Function to explore specific city
+                    function exploreCity(city) {
+                        const today = new Date();
+                        const tomorrow = new Date(today);
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        
+                        const startDate = today.toISOString().split('T')[0];
+                        const endDate = tomorrow.toISOString().split('T')[0];
+                        
+                        window.location.href = `<?php echo base_url('Welcome/result');?>?${city}?${startDate}?${endDate}?2`;
+                    }
                 </script>
         </div>
     </div>
@@ -61,35 +74,35 @@
         <div class="travel_bx">
                     <h4>Countries to travel</h4>
                     <div class="cards">
-                        <div class="card">
+                        <div class="card" onclick="exploreCity('Mumbai')" style="cursor: pointer;">
                             <h3>INDIA <img src="<?= base_url('assets/icon/india.png');?>" alt=""></h3>
                             <img src="<?= base_url('assets/img/Mumbai-India-at-night.jpg');?>" alt="">
                             <div class="btn_city">
-                                <a href="">Read Now</a>
+                                <a href="javascript:void(0);">Explore Now</a>
                                 <h5>Mumbai Central <br> <span>$460</span></h5>
                             </div>
                         </div>
-                        <div class="card">
+                        <div class="card" onclick="exploreCity('New York')" style="cursor: pointer;">
                             <h3>UNITED STATE <img src="<?= base_url('assets/icon/united-states.png');?>" alt=""></h3>
                             <img src="<?= base_url('assets/img/newyork.webp');?>" alt="">
                             <div class="btn_city">
-                                <a href="">Read Now</a>
+                                <a href="javascript:void(0);">Explore Now</a>
                                 <h5>NewYork <br> <span>$870</span></h5>
                             </div>
                         </div>
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='<?php echo base_url('Welcome/destinations'); ?>'" style="cursor: pointer;">
                             <h3>RUSSIA <img src="<?= base_url('assets/icon/russia.png');?>" alt=""></h3>
                             <img src="<?= base_url('assets/img/sanpitersburg.jpg');?>" alt="">
                             <div class="btn_city">
-                                <a href="">Read Now</a>
+                                <a href="javascript:void(0);">Explore Now</a>
                                 <h5>Saint petersburg <br> <span>$660</span></h5>
                             </div>
                         </div>
-                        <div class="card">
+                        <div class="card" onclick="exploreCity('Barcelona')" style="cursor: pointer;">
                             <h3>SPAIN <img src="<?= base_url('assets/icon/spain.png');?>" alt=""></h3>
                             <img src="<?= base_url('assets/img/barcelona.jpg');?>" alt="">
                             <div class="btn_city">
-                                <a href="">Read Now</a>
+                                <a href="javascript:void(0);">Explore Now</a>
                                 <h5>Barcelona <br> <span>$730</span></h5>
                             </div>
                         </div>
@@ -203,7 +216,7 @@
             <li>Russia</li>
             <li>Brazil</li>
             <h6>Included: Air ticket, Hotel, Breakfast, Tours, Airport transfer</h6>
-            <button>MORE INFO</button>
+            <button onclick="window.location.href='<?php echo base_url('Welcome/destinations'); ?>'">VIEW ALL DESTINATIONS</button>
         </div>
         <div class="img_bx">
             <img src="<?= base_url('assets/img/Main_plan.png');?>" alt="">
@@ -231,6 +244,7 @@
     </div>
     </div>
 </section>
+</main>
 
 <!-- Footer  -->
 <?php $this->load->view('layout/footer');?>
