@@ -1,14 +1,17 @@
 <!-- Header  -->
 <?php $this->load->view('layout/header');?>
-<!-- Main Content  -->
-<div class="content">
-            <div class="cont_bx">
-                <h1>The right destination for you and your family</h1>
-                <p>Creative taglines have the capability of capturing the attention of potential costumer.</p>
-                <button>Start your search</button>
+
+<!-- Hero Section Wrapper -->
+<section class="hero-wrapper">
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Discover Your Dream Destination</h1>
+                <p>Explore the world's most beautiful places and create unforgettable memories</p>
             </div>
-            <div class="trip_bx">
-                <div class="search_bx">
+            
+            <!-- Search Box Inside Hero -->
+            <div class="search_bx">
                     <div class="card">
                         <h4>Location <i class="bi bi-caret-down-fill"></i></h4>
                         <input type="text" placeholder="Enter your destination" id="destination">
@@ -46,11 +49,14 @@
                         }
                     })
                 </script>
+        </div>
+    </div>
+</section>
 
-
-
-
-                <div class="travel_bx">
+<!-- Travel Section -->
+<section class="travel-section">
+    <div class="container">
+        <div class="travel_bx">
                     <h4>Countries to travel</h4>
                     <div class="cards">
                         <div class="card">
@@ -87,10 +93,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
-    </header>
-    <div class="offers">
+    </div>
+</section>
+
+<!-- Offers Section -->
+<section class="offers">
+    <div class="offers-container">
         <h1>Best tour Package offers for You</h1>
         <p>choose your next destination</p>
         <div class="cards">
@@ -176,6 +185,11 @@
             </div>
         </div>
     </div>
+    </div>
+</section>
+
+<!-- Destination Section -->
+<section class="destination-wrapper">
     <div class="destination">
         <div class="des_bx">
             <h4>Our Destination</h4>
@@ -213,7 +227,9 @@
             </div>
         </div>
     </div>
+    </div>
+</section>
 
-    <!-- Footer  -->
-    <?php $this->load->view('layout/footer');?>
+<!-- Footer  -->
+<?php $this->load->view('layout/footer');?>
     
