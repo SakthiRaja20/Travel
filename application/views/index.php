@@ -12,6 +12,7 @@
             
             <!-- Search Box Inside Hero -->
             <div class="search_bx">
+                <div class="search-fields">
                     <div class="card">
                         <h4>Location <i class="bi bi-caret-down-fill"></i></h4>
                         <input type="text" placeholder="Enter your destination" id="destination">
@@ -28,8 +29,9 @@
                         <h4>People <i class="bi bi-caret-down-fill"></i></h4>
                         <input type="number" placeholder="How many People?" id="people">
                     </div>
-                    <input type="button" value="Explore Now" id="submit">
                 </div>
+                <input type="button" value="Explore Now" id="submit">
+            </div>
 
                 <script>
                     let destination = document.getElementById('destination');
