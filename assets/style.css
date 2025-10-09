@@ -247,7 +247,7 @@ header .trip_bx .search_bx input[type="button"]:hover {
 	align-items: center;
 	justify-content: center;
 	background: url("img/background1.png") no-repeat center center/cover;
-	padding: 4rem 0;
+	padding: 5rem 3rem;
 	gap: 3rem;
 }
 
@@ -322,11 +322,23 @@ header .trip_bx .search_bx input[type="button"]:hover {
 	align-items: center;
 }
 
-/* ============ TRAVEL SECTION ============ */
+/* Travel Section */
+.travel-bx {
+	width: 100%;
+	padding: 5rem 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
 .travel-section {
 	width: 100%;
-	padding: 3rem;
-	background: #f8f9fa;
+	padding: 5rem 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
 }
 
 .travel-section .container {
@@ -405,75 +417,116 @@ header .trip_bx .search_bx input[type="button"]:hover {
 .travel_bx {
 	position: relative;
 	width: 100%;
-	background: rgba(241, 241, 241, 0.7);
-	backdrop-filter: blur(5px);
-	border-radius: 10px;
-	padding: 2rem;
-	box-shadow: 0px 10px 25px rgba(165, 165, 165, 0.2);
+	max-width: 1400px;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .travel_bx h4 {
-	font-size: 24px;
+	font-size: 2.5rem;
 	font-weight: 700;
-	margin-bottom: 2rem;
-	color: #121213;
+	margin-bottom: 1rem;
+	color: #2f2f2f;
+	letter-spacing: -0.5px;
+}
+
+.travel_bx p {
+	font-size: 1.1rem;
+	color: #6c757d;
+	margin-bottom: 3rem;
 }
 
 .travel_bx .cards {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-	gap: 1.5rem;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 2rem;
+	margin-top: 2.5rem;
 }
 
 .travel_bx .cards .card {
 	background: #fff;
-	border-radius: 10px;
-	padding: 1rem;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	border-radius: 15px;
+	padding: 0;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+	overflow: hidden;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	text-align: left;
+}
+
+.travel_bx .cards .card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
 }
 
 .travel_bx .cards .card h3 {
-	font-size: 16px;
-	font-weight: 600;
-	margin-bottom: 1rem;
+	font-size: 1rem;
+	font-weight: 700;
+	padding: 1rem 1.25rem 0;
+	margin-bottom: 0.75rem;
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 10px;
+	color: #2f2f2f;
+	letter-spacing: 0.5px;
 }
 
 .travel_bx .cards .card h3 img {
-	width: 24px;
-	height: 24px;
+	width: 28px;
+	height: 28px;
 	object-fit: contain;
 }
 
 .travel_bx .cards .card > img {
 	width: 100%;
-	height: 140px;
+	height: 200px;
 	object-fit: cover;
-	border-radius: 8px;
-	margin-bottom: 1rem;
+	transition: transform 0.4s ease;
+}
+
+.travel_bx .cards .card:hover > img {
+	transform: scale(1.08);
 }
 
 .travel_bx .cards .card .btn_city {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-top: 1rem;
+	padding: 1.25rem;
+	background: #f8f9fa;
 }
 
 .travel_bx .cards .card .btn_city a {
 	text-decoration: none;
-	background: #000;
+	background: #037b83;
 	color: #fff;
-	border-radius: 20px;
-	padding: 8px 16px;
-	font-size: 12px;
-	font-weight: 500;
+	border-radius: 25px;
+	padding: 10px 24px;
+	font-size: 0.9rem;
+	font-weight: 600;
+	transition: all 0.3s ease;
+	border: 2px solid #037b83;
 }
 
 .travel_bx .cards .card .btn_city a:hover {
-	background: gray;
+	background: transparent;
+	color: #037b83;
+	transform: translateY(-2px);
+}
+
+.travel_bx .cards .card .btn_city h5 {
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: #2f2f2f;
+	line-height: 1.4;
+	margin: 0;
+}
+
+.travel_bx .cards .card .btn_city h5 span {
+	display: block;
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: #037b83;
+	margin-top: 4px;
 }
 
 .travel_bx .cards .card .btn_city h5 {
@@ -492,8 +545,8 @@ header .trip_bx .search_bx input[type="button"]:hover {
 /* ============ OFFERS SECTION ============ */
 .offers {
 	width: 100%;
-	padding: 3rem;
-	background: linear-gradient(to bottom, #ffffff 0%, #f9fafb 100%);
+	padding: 5rem 3rem;
+	background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
 }
 
 .offers-container {
@@ -649,7 +702,7 @@ header .trip_bx .search_bx input[type="button"]:hover {
 .destination-wrapper {
 	width: 100%;
 	background: linear-gradient(135deg, #f0f4f8 0%, #e6eef5 100%);
-	padding: 3rem;
+	padding: 5rem 3rem;
 }
 
 .destination {
@@ -1095,9 +1148,13 @@ body > *:not(footer) {
 		margin-bottom: 0;
 	}
 
+	.travel-bx,
 	.travel-section,
 	.offers,
-	.destination-wrapper,
+	.destination-wrapper {
+		padding: 4rem 2rem;
+	}
+
 	footer {
 		padding: 2rem;
 	}

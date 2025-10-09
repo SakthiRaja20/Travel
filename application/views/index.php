@@ -69,45 +69,43 @@
 </section>
 
 <!-- Travel Section -->
-<section class="travel-section">
-    <div class="container">
-        <div class="travel_bx">
-                    <h4>Countries to travel</h4>
-                    <div class="cards">
-                        <div class="card" onclick="exploreCity('Mumbai')" style="cursor: pointer;">
-                            <h3>INDIA <img src="<?= base_url('assets/icon/india.png');?>" alt=""></h3>
-                            <img src="<?= base_url('assets/img/Mumbai-India-at-night.jpg');?>" alt="">
-                            <div class="btn_city">
-                                <a href="javascript:void(0);">Explore Now</a>
-                                <h5>Mumbai Central <br> <span>$460</span></h5>
-                            </div>
-                        </div>
-                        <div class="card" onclick="exploreCity('New York')" style="cursor: pointer;">
-                            <h3>UNITED STATE <img src="<?= base_url('assets/icon/united-states.png');?>" alt=""></h3>
-                            <img src="<?= base_url('assets/img/newyork.webp');?>" alt="">
-                            <div class="btn_city">
-                                <a href="javascript:void(0);">Explore Now</a>
-                                <h5>NewYork <br> <span>$870</span></h5>
-                            </div>
-                        </div>
-                        <div class="card" onclick="window.location.href='<?php echo base_url('Welcome/destinations'); ?>'" style="cursor: pointer;">
-                            <h3>RUSSIA <img src="<?= base_url('assets/icon/russia.png');?>" alt=""></h3>
-                            <img src="<?= base_url('assets/img/sanpitersburg.jpg');?>" alt="">
-                            <div class="btn_city">
-                                <a href="javascript:void(0);">Explore Now</a>
-                                <h5>Saint petersburg <br> <span>$660</span></h5>
-                            </div>
-                        </div>
-                        <div class="card" onclick="exploreCity('Barcelona')" style="cursor: pointer;">
-                            <h3>SPAIN <img src="<?= base_url('assets/icon/spain.png');?>" alt=""></h3>
-                            <img src="<?= base_url('assets/img/barcelona.jpg');?>" alt="">
-                            <div class="btn_city">
-                                <a href="javascript:void(0);">Explore Now</a>
-                                <h5>Barcelona <br> <span>$730</span></h5>
-                            </div>
-                        </div>
-                    </div>
+<section class="travel-bx">
+    <div class="travel_bx">
+        <h4>Popular Destinations</h4>
+        <p>Explore amazing places across India</p>
+        <div class="cards">
+            <div class="card" onclick="exploreCity('Jaipur')" style="cursor: pointer;">
+                <h3>JAIPUR <img src="<?= base_url('assets/icon/india.png');?>" alt=""></h3>
+                <img src="<?= base_url('assets/img/lotus_temple.jpg');?>" alt="">
+                <div class="btn_city">
+                    <a href="javascript:void(0);">Explore Now</a>
+                    <h5>The Pink City <br> <span>From ₹4,000</span></h5>
                 </div>
+            </div>
+            <div class="card" onclick="exploreCity('Delhi')" style="cursor: pointer;">
+                <h3>DELHI <img src="<?= base_url('assets/icon/india.png');?>" alt=""></h3>
+                <img src="<?= base_url('assets/img/Mumbai-India-at-night.jpg');?>" alt="">
+                <div class="btn_city">
+                    <a href="javascript:void(0);">Explore Now</a>
+                    <h5>India's Capital <br> <span>From ₹5,500</span></h5>
+                </div>
+            </div>
+            <div class="card" onclick="exploreCity('Goa')" style="cursor: pointer;">
+                <h3>GOA <img src="<?= base_url('assets/icon/india.png');?>" alt=""></h3>
+                <img src="<?= base_url('assets/img/boat.jpg');?>" alt="">
+                <div class="btn_city">
+                    <a href="javascript:void(0);">Explore Now</a>
+                    <h5>Beach Paradise <br> <span>From ₹9,500</span></h5>
+                </div>
+            </div>
+            <div class="card" onclick="exploreCity('Mumbai')" style="cursor: pointer;">
+                <h3>MUMBAI <img src="<?= base_url('assets/icon/india.png');?>" alt=""></h3>
+                <img src="<?= base_url('assets/img/Mumbai-India-at-night.jpg');?>" alt="">
+                <div class="btn_city">
+                    <a href="javascript:void(0);">Explore Now</a>
+                    <h5>City of Dreams <br> <span>From ₹7,000</span></h5>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -131,7 +129,7 @@
                             <i class="bi bi-chat-fill"><span>4586</span></i>
                         </div>
                         <div class="info_price">
-                            <a href="">More Info</a>
+                            <a href="<?php echo base_url('Welcome/destinations'); ?>">More Info</a>
                             <h4>$2648</h4>
                         </div>
                     </div>
@@ -151,7 +149,7 @@
                             <i class="bi bi-chat-fill"><span>4586</span></i>
                         </div>
                         <div class="info_price">
-                            <a href="">More Info</a>
+                            <a href="<?php echo base_url('Welcome/destinations'); ?>">More Info</a>
                             <h4>$2648</h4>
                         </div>
                     </div>
@@ -171,7 +169,7 @@
                             <i class="bi bi-chat-fill"><span>4586</span></i>
                         </div>
                         <div class="info_price">
-                            <a href="">More Info</a>
+                            <a href="<?php echo base_url('Welcome/destinations'); ?>">More Info</a>
                             <h4>$2648</h4>
                         </div>
                     </div>
@@ -191,7 +189,7 @@
                             <i class="bi bi-chat-fill"><span>4586</span></i>
                         </div>
                         <div class="info_price">
-                            <a href="">More Info</a>
+                            <a href="<?php echo base_url('Welcome/destinations'); ?>">More Info</a>
                             <h4>$2648</h4>
                         </div>
                     </div>

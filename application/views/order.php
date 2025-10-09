@@ -214,11 +214,20 @@
         min-height: 50vh;
     }
     
-    .empty-bookings i {
-        font-size: 5rem;
+    .empty-bookings > i {
+        font-size: 6rem;
         color: #037b83;
         margin-bottom: 1.5rem;
-        opacity: 0.3;
+        opacity: 0.8;
+        display: block;
+    }
+    
+    .empty-bookings > i.bi-calendar-x,
+    .empty-bookings > i.bi-exclamation-triangle {
+        font-size: 6rem;
+        color: #037b83;
+        margin-bottom: 1.5rem;
+        opacity: 0.8;
     }
     
     .empty-bookings h3 {
@@ -235,20 +244,58 @@
         max-width: 400px;
     }
     
-    .empty-bookings .explore-btn {
-        padding: 12px 32px;
-        background: #037b83;
+        .empty-bookings .explore-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 40px;
+        margin-top: 30px;
+        font-size: 17px;
+        background: linear-gradient(135deg, #037b83 0%, #02565d 100%);
         color: #fff;
         text-decoration: none;
-        border-radius: 10px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        border: 2px solid #037b83;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none;
+        box-shadow: 0 8px 20px rgba(3, 123, 131, 0.3);
+        position: relative;
+        overflow: hidden;
+        letter-spacing: 0.5px;
+    }
+    
+    .empty-bookings .explore-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .empty-bookings .explore-btn:hover::before {
+        left: 100%;
     }
     
     .empty-bookings .explore-btn:hover {
-        background: transparent;
-        color: #037b83;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(3, 123, 131, 0.4);
+    }
+    
+    .empty-bookings .explore-btn:active {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 15px rgba(3, 123, 131, 0.3);
+    }
+    
+    .empty-bookings .explore-btn i {
+        font-size: 20px;
+        transition: transform 0.3s ease;
+    }
+    
+    .empty-bookings .explore-btn:hover i {
+        transform: rotate(20deg) scale(1.1);
     }
 </style>
 
