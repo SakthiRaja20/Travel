@@ -72,8 +72,9 @@ class CI_Exceptions {
 		E_COMPILE_WARNING	=>	'Compile Warning',
 		E_USER_ERROR		=>	'User Error',
 		E_USER_WARNING		=>	'User Warning',
-		E_USER_NOTICE		=>	'User Notice',
-		E_STRICT		=>	'Runtime Notice'
+		E_USER_NOTICE		=>	'User Notice'
+		// E_STRICT is deprecated in PHP 8.4+
+		// E_STRICT		=>	'Runtime Notice'
 	);
 
 	/**

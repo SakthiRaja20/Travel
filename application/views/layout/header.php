@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/style.css');?>">
     <link rel="stylesheet" href="<?= base_url('assets/media.css');?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <title>Travel</title>
+    <title>Wide Ways</title>
 </head>
 
 <body>
