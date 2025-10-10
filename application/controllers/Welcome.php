@@ -154,6 +154,30 @@ class Welcome extends CI_Controller {
 		$bookingPhone = $inputData['bookingPhone'];
 		$nights = $inputData['nights'];
 
+		// Calculate number of rooms needed (assuming 2 people per room, minimum 1 room)
+		$roomsNeeded = max(1, ceil($pepoleValue / 2));
+
+		// Check if hotel has enough available rooms
+		$checkQuery = "SELECT rooms FROM hotels WHERE id = ?";
+		$checkResult = $this->db->query($checkQuery, [$hotelID]);
+		
+		if ($checkResult->num_rows() == 0) {
+			echo json_encode(["status"=> "error", "message" => "Hotel not found"]);
+			return;
+		}
+
+		$hotelData = $checkResult->row();
+		$availableRooms = $hotelData->rooms;
+
+		if ($availableRooms < $roomsNeeded) {
+			echo json_encode(["status"=> "error", "message" => "Not enough rooms available. Only $availableRooms rooms left."]);
+			return;
+		}
+
+		// Start transaction for atomic operation
+		$this->db->trans_start();
+
+		// Insert booking
 		$query = "INSERT INTO book( hotelID, hotelName, startDate, endDate, userID, price, pepoleValue, nights, discount, bookingName, bookingEmail, bookingPhone) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->db->query($query , [
 			$hotelID,
@@ -168,13 +192,21 @@ class Welcome extends CI_Controller {
 			$bookingName,
 			$bookingEmail,
 			$bookingPhone,
-			
 		]);
 
+		// Update hotel room count (decrement by rooms needed)
 		if ($result) {
-			echo json_encode(["status"=> "error", "message" => "Booking successful"]);
+			$updateQuery = "UPDATE hotels SET rooms = rooms - ? WHERE id = ?";
+			$updateResult = $this->db->query($updateQuery, [$roomsNeeded, $hotelID]);
+		}
+
+		// Complete transaction
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE) {
+			echo json_encode(["status"=> "error", "message" => "Booking failed. Please try again."]);
 		} else {
-			echo json_encode(["status"=> "error", "message" => "Booking failed"]);
+			echo json_encode(["status"=> "success", "message" => "Booking successful! $roomsNeeded room(s) reserved."]);
 		}
 		
 	}

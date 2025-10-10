@@ -470,7 +470,7 @@
 
         let result = await response.json();
 
-        if (result.message == 'Booking successful') {
+        if (result.status == 'success') {
             alert(result.message);
             window.location.href = "<?php echo base_url('/order')?>";
         } else {
