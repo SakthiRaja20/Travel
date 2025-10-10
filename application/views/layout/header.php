@@ -29,8 +29,15 @@
                     <li class="li_btn"><a href="#" id="signupBtn">Register</a></li>
                     ';
                 } else {
+                   $userdata = $this->session->userdata('userdata');
+                   $isAdmin = isset($userdata['is_admin']) && $userdata['is_admin'] === true;
+                   
+                   // Show Dashboard link only for admin
+                   if ($isAdmin) {
+                       echo '<li><a href="'. base_url("/dashboard").'">Dashboard</a></li>';
+                   }
+                   
                    echo '
-                   <li><a href="'. base_url("/dashboard").'">Dashboard</a></li>
                    <li><a href="#" id="userStatus">
                    <i class="bi bi-person-fill" style="margin-right:5px;"></i>  Hello, '
                     . $this->session->userdata('userdata')['name']  .

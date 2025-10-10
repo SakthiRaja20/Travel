@@ -290,7 +290,12 @@
 
         alert(result.message);
 
-        window.location.reload();
+        // Redirect admin to dashboard, regular users reload
+        if (result.status === 'success' && result.is_admin === true) {
+            window.location.href = "<?php echo base_url('dashboard'); ?>";
+        } else {
+            window.location.reload();
+        }
 
 
         } catch (error) {

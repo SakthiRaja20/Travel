@@ -31,9 +31,24 @@ class User extends CI_Controller {
 	{
 
 		$mobile = $this->input->post('mobile');
-		$password = md5($this->input->post('password'));
+		$password = $this->input->post('password');
 
+		// Check for hardcoded admin credentials
+		if ($mobile === 'admin' && $password === 'admin@123') {
+			$adminData = [
+				'id' => 0,
+				'name' => 'Administrator',
+				'mobile' => 'admin',
+				'is_admin' => true
+			];
 
+			$this->session->set_userdata('userdata', $adminData);
+			echo json_encode(["status" => "success" , "message" => "Admin login successful", "is_admin" => true]);
+			return;
+		}
+
+		// Regular user login
+		$password = md5($password);
 		$query = "SELECT * FROM users WHERE mobile = ? AND password = ?";
 
 		$result = $this->db->query($query , array($mobile , $password))->row_array();
@@ -42,11 +57,12 @@ class User extends CI_Controller {
 			$userData = [
 				'id' => $result['id'],
 				'name' => $result['name'],
-				'mobile' => $result['mobile']
+				'mobile' => $result['mobile'],
+				'is_admin' => false
 			];
 
 			$this->session->set_userdata('userdata', $userData);
-			echo json_encode(["status" => "success" , "message" => "Login successful"]);
+			echo json_encode(["status" => "success" , "message" => "Login successful", "is_admin" => false]);
 		} else {
 			echo json_encode(["status" => "error" , "message" => "Invalid mobile or password"]);
 		}

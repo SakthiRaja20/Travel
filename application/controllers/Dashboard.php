@@ -23,6 +23,26 @@ class Dashboard extends CI_Controller {
 	 public $session;
 	 public $upload;
 
+	public function __construct() {
+		parent::__construct();
+		$this->load->database();
+		$this->load->library('session');
+		
+		// Check if user is logged in
+		if (!$this->session->userdata('userdata')) {
+			redirect(base_url());
+			exit();
+		}
+		
+		// Check if user is admin
+		$userdata = $this->session->userdata('userdata');
+		if (!isset($userdata['is_admin']) || $userdata['is_admin'] !== true) {
+			// Redirect non-admin users to their orders page
+			redirect(base_url('Welcome/order'));
+			exit();
+		}
+	}
+
 	public function dashboard()
 	{
 		$this->load->view('Dashboard/dashboard');
