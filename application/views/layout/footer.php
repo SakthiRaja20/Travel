@@ -153,6 +153,50 @@
         text-decoration: underline;
     }
 
+    /* Demo Credentials Styling */
+    .demo-credentials {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .demo-card {
+        flex: 1;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 16px;
+        border-radius: 12px;
+        text-align: left;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .demo-card.admin-demo {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+    }
+
+    .demo-card h4 {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .demo-card p {
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 12px;
+        margin: 6px 0;
+        font-weight: 500;
+    }
+
+    .demo-card p strong {
+        color: #fff;
+        font-weight: 600;
+    }
+
     .login_signup_ll {
         display: block;
     }
@@ -178,6 +222,19 @@
 
         .login_signup h2 {
             font-size: 24px;
+        }
+
+        .demo-credentials {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .demo-card h4 {
+            font-size: 13px;
+        }
+
+        .demo-card p {
+            font-size: 11px;
         }
     }
 </style>
@@ -209,8 +266,23 @@
     <div class="loginBx">
         <h2>Welcome Back</h2>
         <p class="subtitle">Login to continue your adventure</p>
+        
+        <!-- Demo Credentials -->
+        <div class="demo-credentials">
+            <div class="demo-card">
+                <h4>👤 Demo User</h4>
+                <p><strong>Mobile:</strong> 1234567890</p>
+                <p><strong>Password:</strong> 123456</p>
+            </div>
+            <div class="demo-card admin-demo">
+                <h4>👑 Admin</h4>
+                <p><strong>Username:</strong> admin</p>
+                <p><strong>Password:</strong> admin@123</p>
+            </div>
+        </div>
+        
         <form id="loginForm">
-            <input type="number" id="login_mobile" placeholder="Mobile Number" required>
+            <input type="text" id="login_mobile" placeholder="Username or Mobile Number" required>
             <input type="password" id="login_password" placeholder="Password" required>
             <button type="submit" id="login">Login</button>
         </form>

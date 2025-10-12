@@ -302,6 +302,23 @@
                     }
                 })
 
+                // Dashboard Logout Button
+                document.getElementById('dashboardLogoutBtn')?.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    
+                    try {
+                        const response = await fetch('<?php echo base_url("User/logout"); ?>');
+                        const result = await response.json();
+                        
+                        if (result.status === 'success') {
+                            alert(result.message);
+                            window.location.href = '<?php echo base_url(); ?>';
+                        }
+                    } catch (error) {
+                        console.log(error);
+                        alert('Logout failed. Please try again.');
+                    }
+                });
               
             </script>
 

@@ -24,8 +24,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-// $config['base_url'] = 'http://localhost:8000/';
-$config['base_url'] = 'http://localhost/travel/';
+// Auto-detect environment and set base URL accordingly
+if (php_sapi_name() === 'cli-server') {
+    // PHP built-in development server (macOS: php -S localhost:8000)
+    $config['base_url'] = 'http://localhost:8000/';
+} else {
+    // Apache/XAMPP server (Windows or macOS XAMPP)
+    $config['base_url'] = 'http://localhost/travel/';
+}
+
+// php -S localhost:8000
 
 /*
 |--------------------------------------------------------------------------

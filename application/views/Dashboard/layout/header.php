@@ -31,6 +31,6 @@
             </div>
 
             <!-- Logout Start  -->
-            <button><i class="bi bi-power"></i> Logout</button>
+            <button id="dashboardLogoutBtn"><i class="bi bi-power"></i> Logout</button>
             <!-- Logout End -->
         </menu>
