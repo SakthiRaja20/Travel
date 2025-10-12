@@ -30,12 +30,14 @@ SET time_zone = "+00:00";
 CREATE TABLE `book` (
   `id` int(11) NOT NULL,
   `hotelID` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
   `hotelName` longtext NOT NULL,
+  `room_type` varchar(100) NOT NULL,
   `startDate` date NOT NULL,
   `endDate` date NOT NULL,
   `userID` int(11) NOT NULL,
   `price` int(11) NOT NULL,
-  `pepoleValue` int(11) NOT NULL,
+  `peopleValue` int(11) NOT NULL,
   `nights` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
   `bookingName` varchar(255) NOT NULL,
@@ -49,12 +51,219 @@ CREATE TABLE `book` (
 -- Dumping data for table `book`
 --
 
-INSERT INTO `book` (`id`, `hotelID`, `hotelName`, `startDate`, `endDate`, `userID`, `price`, `pepoleValue`, `nights`, `discount`, `bookingName`, `bookingEmail`, `bookingPhone`, `type`, `create_at`) VALUES
-(5, 40, 'Radisson Blu Jaipur', '2025-04-06', '2025-04-12', 11, 60000, 2, 6, 18, 'jahid', 'jahid@gmail.com', '7894561230', 'Reject', '2025-04-06 09:33:40'),
-(6, 53, 'Park Hyatt Goa Resort', '2025-04-23', '2025-04-25', 11, 36000, 2, 2, 18, 'kdscoder', 'kdscoder@gmail.com', '789456123', 'Pending', '2025-04-06 16:08:00'),
-(7, 40, 'Radisson Blu Jaipur', '2025-05-31', '2025-06-02', 12, 20000, 2, 2, 18, 'Jahid Khan', 'jahidsofficials@gmail.com', '23534465656456', 'Accept', '2025-05-31 10:05:06');
+INSERT INTO `book` (`id`, `hotelID`, `room_id`, `hotelName`, `room_type`, `startDate`, `endDate`, `userID`, `price`, `peopleValue`, `nights`, `discount`, `bookingName`, `bookingEmail`, `bookingPhone`, `type`, `create_at`) VALUES
+(5, 40, 15, 'Radisson Blu Jaipur', 'Business Room', '2025-04-06', '2025-04-12', 11, 60000, 2, 6, 18, 'jahid', 'jahid@gmail.com', '7894561230', 'Reject', '2025-04-06 09:33:40'),
+(6, 53, 21, 'Park Hyatt Goa Resort', 'Ocean View Suite', '2025-04-23', '2025-04-25', 11, 36000, 2, 2, 18, 'kdscoder', 'kdscoder@gmail.com', '789456123', 'Pending', '2025-04-06 16:08:00'),
+(7, 40, 16, 'Radisson Blu Jaipur', 'Club Room', '2025-05-31', '2025-06-02', 12, 20000, 2, 2, 18, 'Jahid Khan', 'jahidsofficials@gmail.com', '23534465656456', 'Accept', '2025-05-31 10:05:06');
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `id` int(11) NOT NULL,
+  `hotel_id` int(11) NOT NULL,
+  `room_type` varchar(100) NOT NULL,
+  `capacity` int(11) NOT NULL DEFAULT 2,
+  `price_per_night` decimal(10,2) NOT NULL,
+  `description` text DEFAULT NULL,
+  `amenities` text DEFAULT NULL,
+  `available_rooms` int(11) NOT NULL DEFAULT 0,
+  `total_rooms` int(11) NOT NULL DEFAULT 0,
+  `images` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`id`, `hotel_id`, `room_type`, `capacity`, `price_per_night`, `description`, `amenities`, `available_rooms`, `total_rooms`, `images`, `created_at`) VALUES
+-- Hotel Amber Palace (ID: 31)
+(1, 31, 'Deluxe Room', 2, 12000.00, 'Spacious deluxe room with city view', 'Wi-Fi, AC, TV, Mini Bar, Balcony', 15, 20, 'amber_deluxe1.jpg,amber_deluxe2.jpg', '2025-02-21 18:17:20'),
+(2, 31, 'Executive Suite', 4, 18000.00, 'Luxury suite with separate living area', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Balcony, Jacuzzi', 8, 10, 'amber_suite1.jpg,amber_suite2.jpg', '2025-02-21 18:17:20'),
+(3, 31, 'Presidential Suite', 6, 25000.00, 'Ultimate luxury with panoramic views', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Balcony, Jacuzzi, Private Pool', 2, 5, 'amber_presidential1.jpg,amber_presidential2.jpg', '2025-02-21 18:17:20'),
+
+-- Rajputana Palace Bikaner (ID: 32)
+(4, 32, 'Standard Room', 2, 4500.00, 'Comfortable standard room with traditional decor', 'Wi-Fi, AC, TV, Tea/Coffee Maker', 12, 15, 'rajputana_standard1.jpg,rajputana_standard2.jpg', '2025-02-21 18:17:20'),
+(5, 32, 'Deluxe Room', 3, 6500.00, 'Spacious deluxe with heritage elements', 'Wi-Fi, AC, TV, Mini Bar, Balcony', 8, 10, 'rajputana_deluxe1.jpg,rajputana_deluxe2.jpg', '2025-02-21 18:17:20'),
+
+-- Pink City Hotel (ID: 33)
+(6, 33, 'Budget Room', 1, 2500.00, 'Basic comfortable room for budget travelers', 'Wi-Fi, AC, TV', 25, 30, 'pinkcity_budget1.jpg,pinkcity_budget2.jpg', '2025-02-21 18:17:20'),
+(7, 33, 'Standard Room', 2, 4000.00, 'Standard room with modern amenities', 'Wi-Fi, AC, TV, Mini Fridge', 20, 25, 'pinkcity_standard1.jpg,pinkcity_standard2.jpg', '2025-02-21 18:17:20'),
+(8, 33, 'Family Room', 4, 6000.00, 'Spacious room perfect for families', 'Wi-Fi, AC, TV, Mini Fridge, Extra Beds', 15, 20, 'pinkcity_family1.jpg,pinkcity_family2.jpg', '2025-02-21 18:17:20'),
+
+-- Trident Jaipur (ID: 34)
+(9, 34, 'Superior Room', 2, 15000.00, 'Elegant room with premium amenities', 'Wi-Fi, AC, TV, Mini Bar, Work Desk', 12, 15, 'trident_superior1.jpg,trident_superior2.jpg', '2025-02-21 18:17:20'),
+(10, 34, 'Deluxe Suite', 4, 22000.00, 'Luxury suite with separate areas', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Balcony', 6, 8, 'trident_suite1.jpg,trident_suite2.jpg', '2025-02-21 18:17:20'),
+
+-- The Lalit Jaipur (ID: 35)
+(11, 35, 'Classic Room', 2, 11000.00, 'Elegant room with classic decor', 'Wi-Fi, AC, TV, Mini Bar, Tea/Coffee', 18, 20, 'lalit_classic1.jpg,lalit_classic2.jpg', '2025-02-21 18:17:20'),
+(12, 35, 'Premium Suite', 3, 16000.00, 'Premium suite with luxury amenities', 'Wi-Fi, AC, TV, Mini Bar, Balcony, Jacuzzi', 10, 12, 'lalit_premium1.jpg,lalit_premium2.jpg', '2025-02-21 18:17:20'),
+
+-- Holiday Inn Jaipur (ID: 36)
+(13, 36, 'Comfort Room', 2, 7500.00, 'Comfortable room with essential amenities', 'Wi-Fi, AC, TV, Coffee Maker', 14, 15, 'holidayinn_comfort1.jpg,holidayinn_comfort2.jpg', '2025-02-21 18:17:20'),
+(14, 36, 'Executive Room', 2, 9500.00, 'Executive room with work facilities', 'Wi-Fi, AC, TV, Work Desk, Mini Bar', 8, 10, 'holidayinn_executive1.jpg,holidayinn_executive2.jpg', '2025-02-21 18:17:20'),
+
+-- Radisson Blu Jaipur (ID: 40)
+(15, 40, 'Business Room', 2, 10000.00, 'Modern business room', 'Wi-Fi, AC, TV, Work Desk, Coffee', 22, 25, 'radisson_business1.jpg,radisson_business2.jpg', '2025-02-21 18:17:20'),
+(16, 40, 'Club Room', 3, 14000.00, 'Club room with lounge access', 'Wi-Fi, AC, TV, Mini Bar, Lounge Access', 15, 18, 'radisson_club1.jpg,radisson_club2.jpg', '2025-02-21 18:17:20'),
+
+-- The Imperial Delhi (ID: 41)
+(17, 41, 'Heritage Room', 2, 18000.00, 'Colonial style heritage room', 'Wi-Fi, AC, TV, Mini Bar, Colonial Decor', 12, 15, 'imperial_heritage1.jpg,imperial_heritage2.jpg', '2025-02-21 18:17:20'),
+(18, 41, 'Royal Suite', 4, 28000.00, 'Luxury suite with royal amenities', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Balcony', 4, 6, 'imperial_royal1.jpg,imperial_royal2.jpg', '2025-02-21 18:17:20'),
+
+-- ITC Maurya (ID: 42)
+(19, 42, 'Luxury Room', 2, 22000.00, 'World-class luxury room', 'Wi-Fi, AC, TV, Mini Bar, Premium Amenities', 16, 20, 'itc_luxury1.jpg,itc_luxury2.jpg', '2025-02-21 18:17:20'),
+(20, 42, 'Grand Suite', 6, 35000.00, 'Grand suite for special occasions', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Jacuzzi, Private Butler', 3, 5, 'itc_grand1.jpg,itc_grand2.jpg', '2025-02-21 18:17:20'),
+
+-- Sajjan Niwas (ID: 37) - Budget Jaipur hotel
+(21, 37, 'Standard Room', 2, 4500.00, 'Comfortable traditional room', 'Wi-Fi, AC, TV, Traditional Decor', 20, 25, 'sajjan_standard1.jpg,sajjan_standard2.jpg', '2025-02-21 18:17:20'),
+(22, 37, 'Deluxe Room', 3, 6500.00, 'Spacious room with heritage elements', 'Wi-Fi, AC, TV, Mini Bar, Balcony', 12, 15, 'sajjan_deluxe1.jpg,sajjan_deluxe2.jpg', '2025-02-21 18:17:20'),
+
+-- Oberoi Rajvilas (ID: 38) - Luxury Jaipur hotel
+(23, 38, 'Palatial Suite', 4, 25000.00, 'Luxury suite with royal heritage', 'Wi-Fi, AC, TV, Mini Bar, Private Pool, Butler Service', 6, 8, 'oberoi_suite1.jpg,oberoi_suite2.jpg', '2025-02-21 18:17:20'),
+(24, 38, 'Royal Villa', 6, 40000.00, 'Private villa with royal amenities', 'Wi-Fi, AC, TV, Mini Bar, Private Pool, Kitchen, Butler', 3, 4, 'oberoi_villa1.jpg,oberoi_villa2.jpg', '2025-02-21 18:17:20'),
+
+-- Le Meridien Jaipur (ID: 39) - Luxury Jaipur hotel
+(25, 39, 'Executive Room', 2, 13000.00, 'Modern executive room', 'Wi-Fi, AC, TV, Work Desk, Mini Bar', 18, 22, 'meridien_executive1.jpg,meridien_executive2.jpg', '2025-02-21 18:17:20'),
+(26, 39, 'Presidential Suite', 4, 22000.00, 'Luxury suite with city views', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Balcony, Jacuzzi', 5, 7, 'meridien_suite1.jpg,meridien_suite2.jpg', '2025-02-21 18:17:20'),
+
+-- Leela Palace New Delhi (ID: 43) - Luxury Delhi hotel
+(27, 43, 'Deluxe Room', 2, 20000.00, 'Luxurious deluxe room with palace views', 'Wi-Fi, AC, TV, Mini Bar, Tea/Coffee Maker, Balcony, City View', 15, 18, 'leela_deluxe1.jpg,leela_deluxe2.jpg', '2025-02-21 18:17:20'),
+(28, 43, 'Executive Suite', 4, 35000.00, 'Spacious executive suite with living area', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Balcony, Jacuzzi, Living Room', 8, 10, 'leela_suite1.jpg,leela_suite2.jpg', '2025-02-21 18:17:20'),
+(29, 43, 'Presidential Suite', 6, 50000.00, 'Ultimate luxury with panoramic city views', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Balcony, Jacuzzi, Private Butler, City View', 3, 4, 'leela_presidential1.jpg,leela_presidential2.jpg', '2025-02-21 18:17:20'),
+
+-- Shangri-La Hotel (ID: 44) - Luxury Delhi hotel
+(30, 44, 'Horizon Room', 2, 15000.00, 'Room with panoramic city views', 'Wi-Fi, AC, TV, Mini Bar, City View', 14, 18, 'shangrila_horizon1.jpg,shangrila_horizon2.jpg', '2025-02-21 18:17:20'),
+(31, 44, 'Executive Suite', 4, 25000.00, 'Executive suite with premium amenities', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Lounge Access', 8, 10, 'shangrila_executive1.jpg,shangrila_executive2.jpg', '2025-02-21 18:17:20'),
+
+-- Taj Mahal Hotel (ID: 45) - Luxury Delhi hotel
+(32, 45, 'Luxury Room', 2, 20000.00, 'Iconic luxury room', 'Wi-Fi, AC, TV, Mini Bar, Premium Service', 16, 20, 'taj_luxury1.jpg,taj_luxury2.jpg', '2025-02-21 18:17:20'),
+(33, 45, 'Grand Presidential Suite', 6, 45000.00, 'Ultimate luxury suite', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Jacuzzi, Private Butler', 2, 3, 'taj_grand1.jpg,taj_grand2.jpg', '2025-02-21 18:17:20'),
+
+-- Radisson Blu Dwarka (ID: 46) - Mid-range Delhi hotel
+(34, 46, 'Comfort Room', 2, 8500.00, 'Comfortable modern room', 'Wi-Fi, AC, TV, Coffee Maker', 20, 25, 'radissonblu_comfort1.jpg,radissonblu_comfort2.jpg', '2025-02-21 18:17:20'),
+(35, 46, 'Business Suite', 3, 12000.00, 'Suite for business travelers', 'Wi-Fi, AC, TV, Work Desk, Mini Bar', 12, 15, 'radissonblu_business1.jpg,radissonblu_business2.jpg', '2025-02-21 18:17:20'),
+
+-- Hyatt Centric (ID: 47) - Mid-range Delhi hotel
+(36, 47, 'Contemporary Room', 2, 12000.00, 'Trendy contemporary room', 'Wi-Fi, AC, TV, Mini Bar, Modern Design', 18, 22, 'hyatt_contemporary1.jpg,hyatt_contemporary2.jpg', '2025-02-21 18:17:20'),
+(37, 47, 'Studio Suite', 4, 18000.00, 'Spacious studio suite', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Living Area', 10, 12, 'hyatt_studio1.jpg,hyatt_studio2.jpg', '2025-02-21 18:17:20'),
+
+-- Novotel New Delhi (ID: 48) - Mid-range Delhi hotel
+(38, 48, 'Superior Room', 2, 9500.00, 'Superior room with great amenities', 'Wi-Fi, AC, TV, Mini Bar, Coffee', 16, 20, 'novotel_superior1.jpg,novotel_superior2.jpg', '2025-02-21 18:17:20'),
+(39, 48, 'Family Suite', 4, 14000.00, 'Perfect for families', 'Wi-Fi, AC, TV, Mini Bar, Extra Beds, Kitchen', 8, 10, 'novotel_family1.jpg,novotel_family2.jpg', '2025-02-21 18:17:20'),
+
+-- Holiday Inn Mayur Vihar (ID: 49) - Budget Delhi hotel
+(40, 49, 'Standard Room', 2, 5500.00, 'Comfortable standard room', 'Wi-Fi, AC, TV, Coffee Maker', 22, 28, 'holidayinn_standard1.jpg,holidayinn_standard2.jpg', '2025-02-21 18:17:20'),
+(41, 49, 'Deluxe Room', 3, 7500.00, 'Spacious deluxe room', 'Wi-Fi, AC, TV, Mini Bar, Balcony', 14, 18, 'holidayinn_deluxe1.jpg,holidayinn_deluxe2.jpg', '2025-02-21 18:17:20'),
+
+-- The Park New Delhi (ID: 50) - Mid-range Delhi hotel
+(42, 50, 'Park Room', 2, 13000.00, 'Elegant room with modern amenities', 'Wi-Fi, AC, TV, Mini Bar, Premium Bedding', 15, 18, 'park_room1.jpg,park_room2.jpg', '2025-02-21 18:17:20'),
+(43, 50, 'Executive Suite', 4, 20000.00, 'Executive suite with work facilities', 'Wi-Fi, AC, TV, Mini Bar, Work Desk, Lounge Access', 6, 8, 'park_executive1.jpg,park_executive2.jpg', '2025-02-21 18:17:20'),
+
+-- Taj Exotica Resort & Spa (ID: 51) - Luxury Goa resort
+(44, 51, 'Beach Villa', 4, 22000.00, 'Luxury villa with beach access', 'Wi-Fi, AC, TV, Mini Bar, Beach Access, Private Balcony', 8, 12, 'taj_exotica_villa1.jpg,taj_exotica_villa2.jpg', '2025-02-21 18:17:20'),
+(45, 51, 'Overwater Suite', 6, 35000.00, 'Exclusive overwater suite', 'Wi-Fi, AC, TV, Mini Bar, Private Pool, Ocean View', 4, 6, 'taj_exotica_overwater1.jpg,taj_exotica_overwater2.jpg', '2025-02-21 18:17:20'),
+
+-- The Leela Goa (ID: 52) - Luxury Goa resort
+(46, 52, 'Garden Villa', 4, 25000.00, 'Beautiful garden villa', 'Wi-Fi, AC, TV, Mini Bar, Garden View, Private Terrace', 10, 14, 'leela_goa_garden1.jpg,leela_goa_garden2.jpg', '2025-02-21 18:17:20'),
+(47, 52, 'Presidential Villa', 8, 45000.00, 'Ultimate luxury villa', 'Wi-Fi, AC, TV, Mini Bar, Private Pool, Butler Service', 2, 3, 'leela_goa_presidential1.jpg,leela_goa_presidential2.jpg', '2025-02-21 18:17:20'),
+
+-- Park Hyatt Goa Resort (ID: 53) - Luxury Goa resort
+(48, 53, 'Ocean View Room', 2, 18000.00, 'Room with stunning ocean views', 'Wi-Fi, AC, TV, Mini Bar, Ocean View, Balcony', 12, 16, 'parkhyatt_ocean1.jpg,parkhyatt_ocean2.jpg', '2025-02-21 18:17:20'),
+(49, 53, 'Beachfront Suite', 4, 28000.00, 'Suite right on the beach', 'Wi-Fi, AC, TV, Mini Bar, Beach Access, Private Terrace', 6, 8, 'parkhyatt_beachfront1.jpg,parkhyatt_beachfront2.jpg', '2025-02-21 18:17:20'),
+
+-- Holiday Inn Resort Goa (ID: 54) - Mid-range Goa resort
+(50, 54, 'Garden Room', 2, 9500.00, 'Comfortable room with garden views', 'Wi-Fi, AC, TV, Coffee Maker, Garden View', 18, 24, 'holidayinn_garden1.jpg,holidayinn_garden2.jpg', '2025-02-21 18:17:20'),
+(51, 54, 'Beach Suite', 4, 14000.00, 'Suite with beach access', 'Wi-Fi, AC, TV, Mini Bar, Beach Access', 10, 12, 'holidayinn_beach1.jpg,holidayinn_beach2.jpg', '2025-02-21 18:17:20'),
+
+-- Alila Diwa Goa (ID: 55) - Luxury Goa resort
+(52, 55, 'Cliff Villa', 4, 17000.00, 'Villa perched on cliffs', 'Wi-Fi, AC, TV, Mini Bar, Ocean View, Private Pool', 8, 10, 'alila_cliff1.jpg,alila_cliff2.jpg', '2025-02-21 18:17:20'),
+(53, 55, 'Presidential Cliff Villa', 6, 28000.00, 'Ultimate cliff villa experience', 'Wi-Fi, AC, TV, Mini Bar, Infinity Pool, Butler Service', 3, 4, 'alila_presidential1.jpg,alila_presidential2.jpg', '2025-02-21 18:17:20'),
+
+-- Goa Marriott Resort & Spa (ID: 56) - Luxury Goa resort
+(54, 56, 'Deluxe Room', 2, 16000.00, 'Spacious deluxe room', 'Wi-Fi, AC, TV, Mini Bar, Pool View', 14, 18, 'marriott_deluxe1.jpg,marriott_deluxe2.jpg', '2025-02-21 18:17:20'),
+(55, 56, 'Executive Suite', 4, 24000.00, 'Executive suite with amenities', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Lounge Access', 7, 9, 'marriott_executive1.jpg,marriott_executive2.jpg', '2025-02-21 18:17:20'),
+
+-- Radisson Blu Resort Goa (ID: 57) - Mid-range Goa resort
+(56, 57, 'Superior Room', 2, 14000.00, 'Superior room with resort amenities', 'Wi-Fi, AC, TV, Mini Bar, Pool Access', 16, 20, 'radissonblu_superior1.jpg,radissonblu_superior2.jpg', '2025-02-21 18:17:20'),
+(57, 57, 'Family Suite', 5, 20000.00, 'Perfect for families', 'Wi-Fi, AC, TV, Mini Bar, Extra Beds, Kitchen', 6, 8, 'radissonblu_family1.jpg,radissonblu_family2.jpg', '2025-02-21 18:17:20'),
+
+-- W Goa (ID: 58) - Luxury Goa resort
+(58, 58, 'Wonderful Room', 2, 13000.00, 'Stylish room with vibrant design', 'Wi-Fi, AC, TV, Mini Bar, Beach Access', 12, 15, 'w_goa_wonderful1.jpg,w_goa_wonderful2.jpg', '2025-02-21 18:17:20'),
+(59, 58, 'Spectacular Suite', 4, 22000.00, 'Suite with spectacular views', 'Wi-Fi, AC, TV, Mini Bar, Ocean View, Private Terrace', 5, 7, 'w_goa_spectacular1.jpg,w_goa_spectacular2.jpg', '2025-02-21 18:17:20'),
+
+-- Vivanta by Taj - Panaji (ID: 59) - Mid-range Goa hotel
+(60, 59, 'Deluxe Room', 2, 15000.00, 'Modern deluxe room', 'Wi-Fi, AC, TV, Mini Bar, City View', 14, 18, 'vivanta_deluxe1.jpg,vivanta_deluxe2.jpg', '2025-02-21 18:17:20'),
+(61, 59, 'Executive Suite', 3, 21000.00, 'Executive suite for business travelers', 'Wi-Fi, AC, TV, Mini Bar, Work Desk, Lounge', 8, 10, 'vivanta_executive1.jpg,vivanta_executive2.jpg', '2025-02-21 18:17:20'),
+
+-- Marbella Beach Resort (ID: 60) - Budget Goa resort
+(62, 60, 'Standard Room', 2, 11000.00, 'Comfortable beachside room', 'Wi-Fi, AC, TV, Beach Access', 20, 25, 'marbella_standard1.jpg,marbella_standard2.jpg', '2025-02-21 18:17:20'),
+(63, 60, 'Beachfront Suite', 4, 16000.00, 'Suite with direct beach access', 'Wi-Fi, AC, TV, Mini Bar, Beach Access, Balcony', 10, 12, 'marbella_beachfront1.jpg,marbella_beachfront2.jpg', '2025-02-21 18:17:20'),
+
+-- The Taj Mahal Palace (ID: 61) - Luxury Mumbai hotel
+(64, 61, 'Heritage Room', 2, 25000.00, 'Iconic room with heritage charm', 'Wi-Fi, AC, TV, Mini Bar, Sea View, Butler Service', 15, 18, 'taj_mumbai_heritage1.jpg,taj_mumbai_heritage2.jpg', '2025-02-21 18:17:20'),
+(65, 61, 'Presidential Suite', 4, 45000.00, 'Ultimate luxury with Gateway views', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Jacuzzi, Private Butler', 3, 5, 'taj_mumbai_presidential1.jpg,taj_mumbai_presidential2.jpg', '2025-02-21 18:17:20'),
+
+-- The Oberoi Mumbai (ID: 62) - Luxury Mumbai hotel
+(66, 62, 'Sea View Room', 2, 22000.00, 'Room with stunning Arabian Sea views', 'Wi-Fi, AC, TV, Mini Bar, Sea View, Balcony', 18, 22, 'oberoi_mumbai_sea1.jpg,oberoi_mumbai_sea2.jpg', '2025-02-21 18:17:20'),
+(67, 62, 'Executive Suite', 4, 35000.00, 'Luxury suite with panoramic views', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Jacuzzi, Living Room', 6, 8, 'oberoi_mumbai_executive1.jpg,oberoi_mumbai_executive2.jpg', '2025-02-21 18:17:20'),
+
+-- ITC Grand Central (ID: 63) - Luxury Mumbai hotel
+(68, 63, 'Grand Room', 2, 16000.00, 'Elegant room with modern amenities', 'Wi-Fi, AC, TV, Mini Bar, Work Desk, City View', 20, 25, 'itc_mumbai_grand1.jpg,itc_mumbai_grand2.jpg', '2025-02-21 18:17:20'),
+(69, 63, 'Imperial Suite', 6, 28000.00, 'Spacious suite for special occasions', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Jacuzzi, Private Dining', 4, 6, 'itc_mumbai_imperial1.jpg,itc_mumbai_imperial2.jpg', '2025-02-21 18:17:20'),
+
+-- JW Marriott Mumbai (ID: 64) - Luxury Mumbai hotel
+(70, 64, 'Premier Room', 2, 14000.00, 'Premium room with airport convenience', 'Wi-Fi, AC, TV, Mini Bar, Work Desk, Airport Transfer', 22, 28, 'marriott_mumbai_premier1.jpg,marriott_mumbai_premier2.jpg', '2025-02-21 18:17:20'),
+(71, 64, 'Executive Suite', 4, 24000.00, 'Executive suite with business facilities', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Work Desk, Lounge Access', 8, 10, 'marriott_mumbai_executive1.jpg,marriott_mumbai_executive2.jpg', '2025-02-21 18:17:20'),
+
+-- Hotel Marine Plaza (ID: 65) - Mid-range Mumbai hotel
+(72, 65, 'Art Deco Room', 2, 10000.00, 'Charming room with Art Deco design', 'Wi-Fi, AC, TV, Mini Bar, Sea View', 16, 20, 'marine_artdeco1.jpg,marine_artdeco2.jpg', '2025-02-21 18:17:20'),
+(73, 65, 'Beach View Suite', 4, 15000.00, 'Suite with direct beach views', 'Wi-Fi, AC, TV, Mini Bar, Beach Access, Balcony', 10, 12, 'marine_beach1.jpg,marine_beach2.jpg', '2025-02-21 18:17:20'),
+
+-- Trident Nariman Point (ID: 66) - Mid-range Mumbai hotel
+(74, 66, 'Business Room', 2, 12000.00, 'Modern business room', 'Wi-Fi, AC, TV, Work Desk, Coffee Maker', 18, 22, 'trident_mumbai_business1.jpg,trident_mumbai_business2.jpg', '2025-02-21 18:17:20'),
+(75, 66, 'Club Suite', 3, 18000.00, 'Club room with lounge benefits', 'Wi-Fi, AC, TV, Mini Bar, Lounge Access, City View', 12, 15, 'trident_mumbai_club1.jpg,trident_mumbai_club2.jpg', '2025-02-21 18:17:20'),
+
+-- The Leela Mumbai (ID: 67) - Luxury Mumbai hotel
+(76, 67, 'Deluxe Room', 2, 20000.00, 'Luxury room with premium amenities', 'Wi-Fi, AC, TV, Mini Bar, Airport Transfer, Spa Access', 16, 20, 'leela_mumbai_deluxe1.jpg,leela_mumbai_deluxe2.jpg', '2025-02-21 18:17:20'),
+(77, 67, 'Royal Suite', 6, 38000.00, 'Royal suite with world-class service', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Jacuzzi, Private Butler', 3, 4, 'leela_mumbai_royal1.jpg,leela_mumbai_royal2.jpg', '2025-02-21 18:17:20'),
+
+-- Hyatt Regency Mumbai (ID: 68) - Mid-range Mumbai hotel
+(78, 68, 'Regency Room', 2, 8500.00, 'Comfortable room with modern design', 'Wi-Fi, AC, TV, Coffee Maker, Work Desk', 20, 25, 'hyatt_mumbai_regency1.jpg,hyatt_mumbai_regency2.jpg', '2025-02-21 18:17:20'),
+(79, 68, 'Executive Suite', 4, 13000.00, 'Suite with executive amenities', 'Wi-Fi, AC, TV, Mini Bar, Kitchen, Lounge Access', 10, 12, 'hyatt_mumbai_executive1.jpg,hyatt_mumbai_executive2.jpg', '2025-02-21 18:17:20'),
+
+-- Novotel Mumbai (ID: 69) - Mid-range Mumbai hotel
+(80, 69, 'Superior Room', 2, 7000.00, 'Stylish room with great views', 'Wi-Fi, AC, TV, Mini Bar, Beach View', 18, 24, 'novotel_mumbai_superior1.jpg,novotel_mumbai_superior2.jpg', '2025-02-21 18:17:20'),
+(81, 69, 'Family Suite', 5, 11000.00, 'Perfect for families', 'Wi-Fi, AC, TV, Mini Bar, Extra Beds, Kitchen', 8, 10, 'novotel_mumbai_family1.jpg,novotel_mumbai_family2.jpg', '2025-02-21 18:17:20'),
+
+-- Fariyas Hotel Mumbai (ID: 70) - Budget Mumbai hotel
+(82, 70, 'Standard Room', 2, 5500.00, 'Comfortable budget room', 'Wi-Fi, AC, TV, Tea/Coffee Maker', 22, 28, 'fariyas_standard1.jpg,fariyas_standard2.jpg', '2025-02-21 18:17:20'),
+(83, 70, 'Deluxe Room', 3, 7500.00, 'Spacious room with extra amenities', 'Wi-Fi, AC, TV, Mini Bar, Balcony', 14, 18, 'fariyas_deluxe1.jpg,fariyas_deluxe2.jpg', '2025-02-21 18:17:20');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `hotel_id` (`hotel_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- Table structure for table `hotels`

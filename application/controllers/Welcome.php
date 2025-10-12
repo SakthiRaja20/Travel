@@ -137,56 +137,92 @@ class Welcome extends CI_Controller {
 		
 	}
 
+	public function getHotelRooms()
+	{
+		$inputData = json_decode(file_get_contents('php://input'), true);
+		$hotelID = $inputData['hotelID'];
+		
+		$query = "SELECT * FROM rooms WHERE hotel_id = ? AND available_rooms > 0 ORDER BY price_per_night ASC";
+		$result = $this->db->query($query , array($hotelID))->result_array();
+
+		if ($result) {
+			echo json_encode([$result]);
+		} else {
+			echo json_encode(["status"=> "error", "message" => "No rooms available for this hotel"]);
+		}
+		
+	}
+
 
 	public function bookRoom()
 	{
 		$inputData = json_decode(file_get_contents('php://input'), true);
 		$hotelID = $inputData['hotelID'];
+		$roomID = $inputData['roomId'];
 		$hotelName = $inputData['hotelName'];
+		$roomType = $inputData['roomType'];
 		$startDate = $inputData['startDate'];
 		$endDate = $inputData['endDate'];
 		$userID = $inputData['userID'];
 		$price = $inputData['price'];
-		$pepoleValue = $inputData['pepoleValue'];
+		$peopleValue = (int)$inputData['peopleValue']; // Ensure it's an integer
 		$discount = $inputData['discount'];
 		$bookingName = $inputData['bookingName'];
 		$bookingEmail = $inputData['bookingEmail'];
 		$bookingPhone = $inputData['bookingPhone'];
 		$nights = $inputData['nights'];
-
-		// Calculate number of rooms needed (assuming 2 people per room, minimum 1 room)
-		$roomsNeeded = max(1, ceil($pepoleValue / 2));
-
-		// Check if hotel has enough available rooms
-		$checkQuery = "SELECT rooms FROM hotels WHERE id = ?";
-		$checkResult = $this->db->query($checkQuery, [$hotelID]);
 		
-		if ($checkResult->num_rows() == 0) {
-			echo json_encode(["status"=> "error", "message" => "Hotel not found"]);
+		// Log incoming data for debugging
+		error_log("Booking Request - Hotel: {$hotelID}, Room: {$roomID}, People: {$peopleValue}, Price: {$price}, Nights: {$nights}");
+
+		// Check if room exists and has availability
+		$roomQuery = "SELECT * FROM rooms WHERE id = ? AND hotel_id = ? AND available_rooms > 0";
+		$roomResult = $this->db->query($roomQuery, [$roomID, $hotelID]);
+
+		if ($roomResult->num_rows() == 0) {
+			echo json_encode(["status"=> "error", "message" => "Room not available or does not exist"]);
 			return;
 		}
 
-		$hotelData = $checkResult->row();
-		$availableRooms = $hotelData->rooms;
+		$roomData = $roomResult->row();
 
-		if ($availableRooms < $roomsNeeded) {
-			echo json_encode(["status"=> "error", "message" => "Not enough rooms available. Only $availableRooms rooms left."]);
+		// Calculate number of rooms needed
+		$capacity = (int)$roomData->capacity;
+		$roomsNeeded = ceil($peopleValue / $capacity);
+
+		// Only allow booking if peopleValue <= room capacity
+		if ($peopleValue > $capacity) {
+			echo json_encode(["status"=> "error", "message" => "Selected room can only accommodate {$capacity} guests. Please select a suitable room."]);
+			return;
+		}
+
+		// Log for debugging
+		error_log("Booking Debug - People: {$peopleValue}, Capacity: {$capacity}, Rooms Needed: {$roomsNeeded}, Available: {$roomData->available_rooms}");
+
+		// Price is already the total price from frontend (price per night * nights)
+		$totalPrice = $price;
+
+		// Check if enough rooms are available
+		if ($roomData->available_rooms < 1) {
+			echo json_encode(["status"=> "error", "message" => "Not enough rooms available. Only {$roomData->available_rooms} left."]);
 			return;
 		}
 
 		// Start transaction for atomic operation
 		$this->db->trans_start();
 
-		// Insert booking
-		$query = "INSERT INTO book( hotelID, hotelName, startDate, endDate, userID, price, pepoleValue, nights, discount, bookingName, bookingEmail, bookingPhone) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+		// Insert booking with total price (already calculated on frontend)
+		$query = "INSERT INTO book( hotelID, room_id, hotelName, room_type, startDate, endDate, userID, price, peopleValue, nights, discount, bookingName, bookingEmail, bookingPhone) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->db->query($query , [
 			$hotelID,
+			$roomID,
 			$hotelName,
+			$roomType,
 			$startDate,
 			$endDate,
 			$userID,
-			$price,
-			$pepoleValue,
+			$totalPrice, // Store total price (already includes all rooms)
+			$peopleValue,
 			$nights,
 			$discount,
 			$bookingName,
@@ -194,10 +230,12 @@ class Welcome extends CI_Controller {
 			$bookingPhone,
 		]);
 
-		// Update hotel room count (decrement by rooms needed)
+		// Update room availability (decrement by 1 room per booking)
 		if ($result) {
-			$updateQuery = "UPDATE hotels SET rooms = rooms - ? WHERE id = ?";
-			$updateResult = $this->db->query($updateQuery, [$roomsNeeded, $hotelID]);
+			error_log("Updating room availability - Decrementing 1 room from room ID: {$roomID}");
+			$updateQuery = "UPDATE rooms SET available_rooms = available_rooms - 1 WHERE id = ?";
+			$updateResult = $this->db->query($updateQuery, [$roomID]);
+			error_log("Update result: " . ($updateResult ? "Success" : "Failed"));
 		}
 
 		// Complete transaction
@@ -206,7 +244,7 @@ class Welcome extends CI_Controller {
 		if ($this->db->trans_status() === FALSE) {
 			echo json_encode(["status"=> "error", "message" => "Booking failed. Please try again."]);
 		} else {
-			echo json_encode(["status"=> "success", "message" => "Booking successful! $roomsNeeded room(s) reserved."]);
+			echo json_encode(["status"=> "success", "message" => "Booking successful! {$roomType} reserved for {$nights} night(s)."]);
 		}
 		
 	}
@@ -218,7 +256,7 @@ class Welcome extends CI_Controller {
 		$inputData = json_decode(file_get_contents('php://input'), true);
 		$id = $inputData['id'];
 		
-		$query = "SELECT b.* , h.* FROM `book` as b INNER JOIN hotels as h ON b.hotelID = h.id WHERE b.userID = ? ORDER BY b.id DESC";
+		$query = "SELECT b.* , h.*, r.room_type, r.capacity, r.amenities, r.images as room_images FROM `book` as b INNER JOIN hotels as h ON b.hotelID = h.id INNER JOIN rooms as r ON b.room_id = r.id WHERE b.userID = ? ORDER BY b.id DESC";
 		$result = $this->db->query($query , array($id))->result_array();
 
 		if ($result) {

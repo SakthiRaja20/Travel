@@ -413,14 +413,14 @@
 
             <div class="checkIN checkIN2">
                 <span><b>${el.nights}</b> Nights</span>
-                <span><b>${el.pepoleValue}</b> People</span>
-                <span><b>1</b> Room</span>
+                <span><b>${el.peopleValue}</b> People</span>
+                <span><b>${Math.ceil(el.peopleValue / el.capacity)}</b> Room${Math.ceil(el.peopleValue / el.capacity) > 1 ? 's' : ''}</span>
             </div>
 
              <div class="checkIN">
                 <label for="">Price</label>
-                <h6><span>${(el.price) - ((el.mrp * el.discount) / 100)}</span>Rs</h6>
-                <p>MRP <b>${el.mrp}</b> <b>${Math.floor(el.discount)}%</b> Discount</p>
+                <h6><span>${((el.price) - ((el.mrp * el.discount) / 100)) * Math.ceil(el.peopleValue / el.capacity)}</span>Rs</h6>
+                <p>MRP <b>${el.mrp * Math.ceil(el.peopleValue / el.capacity)}</b> <b>${Math.floor(el.discount)}%</b> Discount</p>
             </div>
 
 

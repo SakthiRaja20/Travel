@@ -194,9 +194,140 @@
        cursor: pointer;
        transition: .3s linear;
     }
-    .hotelBook .alternativeDetails .formCard input[type="submit"]:hover {
-       background: transparent;
-       color: #037b83;
+    .hotelBook .roomSelection {
+        margin: 30px 0;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+    }
+    .hotelBook .roomSelection h3 {
+        margin-bottom: 20px;
+        color: #037b83;
+        font-size: 24px;
+    }
+    .hotelBook .roomOptions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    .hotelBook .roomCard {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .hotelBook .roomCard:hover {
+        border-color: #037b83;
+        box-shadow: 0 4px 12px rgba(3, 123, 131, 0.1);
+    }
+    .hotelBook .roomCard.selected {
+        border-color: #037b83;
+        background: #f0f8f9;
+        box-shadow: 0 4px 12px rgba(3, 123, 131, 0.2);
+    }
+    .hotelBook .roomHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .hotelBook .roomHeader h4 {
+        margin: 0;
+        color: #333;
+        font-size: 18px;
+    }
+    .hotelBook .roomPrice {
+        font-size: 16px;
+        font-weight: bold;
+        color: #037b83;
+    }
+    .hotelBook .roomDetails p {
+        margin: 8px 0;
+        color: #666;
+        font-size: 14px;
+    }
+    .hotelBook .roomDetails i {
+        margin-right: 8px;
+        color: #037b83;
+    }
+    .hotelBook .selectRoomBtn {
+        width: 100%;
+        padding: 12px;
+        background: #037b83;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s ease;
+        margin-top: 15px;
+    }
+    .hotelBook .selectRoomBtn:hover {
+        background: #025a5f;
+    }
+    .hotelBook .selectedRoom {
+        background: #e8f5f5;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        border-left: 4px solid #037b83;
+    }
+    .hotelBook .selectedRoom h5 {
+        margin: 0 0 8px 0;
+        color: #037b83;
+    }
+    .hotelBook .selectedRoom p {
+        margin: 0;
+        color: #666;
+    }
+    .hotelBook .roomError {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        color: #856404;
+    }
+    .hotelBook .roomError i {
+        font-size: 24px;
+        margin-bottom: 10px;
+        display: block;
+    }
+    .hotelBook .roomError p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+    .hotelBook .capacity-warning {
+        border-color: #ffc107 !important;
+        background: #fff3cd !important;
+        opacity: 0.7;
+    }
+    .hotelBook .capacity-warning .roomHeader h4 {
+        color: #856404;
+    }
+    .hotelBook .capacity-warning .selectRoomBtn {
+        background: #ffc107;
+        color: #856404;
+        cursor: not-allowed;
+    }
+    .hotelBook .capacity-warning .selectRoomBtn:hover {
+        background: #e0a800;
+    }
+    .hotelBook .capacity-notice {
+        background: #e7f3ff;
+        border: 1px solid #b3d7ff;
+        border-radius: 6px;
+        padding: 12px 16px;
+        margin-bottom: 20px;
+        color: #0066cc;
+    }
+    .hotelBook .capacity-notice i {
+        margin-right: 8px;
+    }
+    .hotelBook .capacity-notice strong {
+        color: #004499;
     }
 </style>
 
@@ -241,22 +372,30 @@
 
 
  <script>
+    console.log('🚀 Script loaded successfully');
+    
     const mainUrl = window.location.href.split('?');
    const hotelID = mainUrl[1];
    const cityValue = mainUrl[2];
    const dateValue1 = mainUrl[3];
    const dateValue2 = mainUrl[4];
-   const peopleValue = mainUrl[5];
+   const peopleValue = parseInt(mainUrl[5]);
+   
+   console.log('📊 URL Parameters:', { hotelID, cityValue, dateValue1, dateValue2, peopleValue });
 
-//    fetch hotel data 
+   // Global variables
+   let nights = 0; 
    const fetchData = async (hotelID) => {
+    console.log('🔄 fetchData called for hotel:', hotelID);
 
     const requestData = {
         hotelID
     };
 
     try {
-        const response = await fetch("<?php echo base_url('Welcome/hotelFind')?>" , {
+        console.log('✅ Entering try block');
+        // Fetch hotel data
+        const hotelResponse = await fetch("<?php echo base_url('Welcome/hotelFind')?>", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -264,29 +403,94 @@
             body: JSON.stringify(requestData)
         });
 
-        const data = await response.json();
+        // Fetch room data
+        const roomResponse = await fetch("<?php echo base_url('Welcome/getHotelRooms')?>", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestData)
+        });
 
-        if (data) {
+        const hotelData = await hotelResponse.json();
+        const roomData = await roomResponse.json();
+        
+        console.log('📦 Data received - Hotel:', hotelData, 'Rooms:', roomData);
 
-            console.log(data)
+        if (hotelData && roomData) {
+            console.log('✅ Both hotel and room data available');
+            console.log('🏨 Hotel Data:', hotelData);
+            console.log('🛏️ Room Data:', roomData);
+            console.log('🔍 Room Data type:', typeof roomData[0]);
+            console.log('🔍 Room Data[0]:', roomData[0]);
+
+            // Check if room data contains an error
+            if (roomData[0] && typeof roomData[0] === 'object' && roomData[0].status === 'error') {
+                console.error('Room API Error:', roomData[0].message);
+                
+                // Show error message for room selection
+                let roomSelection = document.createElement('div');
+                roomSelection.className = 'roomSelection';
+                roomSelection.innerHTML = `
+                    <h3>Select Your Room</h3>
+                    <div class="roomError">
+                        <p><i class="fas fa-exclamation-triangle"></i> ${roomData[0].message}</p>
+                        <p>Please contact the hotel directly or try another hotel.</p>
+                    </div>
+                `;
+                
+                // Insert room selection before booking details
+                let contentSec = document.getElementsByClassName('contentSec')[0];
+                contentSec.parentNode.insertBefore(roomSelection, contentSec.nextSibling);
+                
+                // Continue with hotel details but disable booking
+                let bookingDetails = document.getElementsByClassName('bookingDetails')[0];
+                bookingDetails.innerHTML = '<p style="color: red;">No rooms available for booking at this time.</p>';
+                return;
+            }
+
+            // Check if roomData[0] is actually an array of rooms
+            if (!Array.isArray(roomData[0])) {
+                console.error('Invalid room data format:', roomData);
+                
+                // Show error message for room selection
+                let roomSelection = document.createElement('div');
+                roomSelection.className = 'roomSelection';
+                roomSelection.innerHTML = `
+                    <h3>Select Your Room</h3>
+                    <div class="roomError">
+                        <p><i class="fas fa-exclamation-triangle"></i> Unable to load room information.</p>
+                        <p>Please try again or contact support.</p>
+                    </div>
+                `;
+                
+                // Insert room selection before booking details
+                let contentSec = document.getElementsByClassName('contentSec')[0];
+                contentSec.parentNode.insertBefore(roomSelection, contentSec.nextSibling);
+                
+                // Continue with hotel details but disable booking
+                let bookingDetails = document.getElementsByClassName('bookingDetails')[0];
+                bookingDetails.innerHTML = '<p style="color: red;">Unable to load room information.</p>';
+                return;
+            }
 
          let div = document.createElement('div');
          div.className = 'hotelContent';
          div.innerHTML = `
-         <img src="<?php echo base_url('/assets/img/Hotels-photos/');?>${data[0][0].poster}" alt="">
+         <img src="<?php echo base_url('/assets/img/Hotels-photos/');?>${hotelData[0][0].poster}" alt="">
         <div class="rightImages">
-            <img src="<?php echo base_url('/assets/img/Hotels-photos/');?>${data[0][0].room_andHotelImages.split(',')[0]}" alt="">
-            <img src="<?php echo base_url('/assets/img/Hotels-photos/');?>${data[0][0].room_andHotelImages.split(',')[1].split(' ')[1]}" alt="">
+            <img src="<?php echo base_url('/assets/img/Hotels-photos/');?>${hotelData[0][0].room_andHotelImages.split(',')[0]}" alt="">
+            <img src="<?php echo base_url('/assets/img/Hotels-photos/');?>${hotelData[0][0].room_andHotelImages.split(',')[1].split(' ')[1]}" alt="">
         </div>
         <div class="rightRating">
-            <h5><span>${Math.floor(data[0][0].rate)}</span> ${data[0][0].rate > 4.1 ? 'Very Good' : rate >= 3.5 ? "Good" : rate > 2 ? "Average" : "Poor"}</h5>
-            <h5><span>${data[0][0].rooms}</span> Room Left</h5>
-            <h5><span>${Math.floor(data[0][0].mrp)}</span>Rs / night</h5>
-            <h5><span>${Math.floor(data[0][0].discount)}</span>% Discount</h5>
+            <h5><span>${Math.floor(hotelData[0][0].rate)}</span> ${hotelData[0][0].rate > 4.1 ? 'Very Good' : hotelData[0][0].rate >= 3.5 ? "Good" : hotelData[0][0].rate > 2 ? "Average" : "Poor"}</h5>
+            <h5 id="totalRoomsDisplay"><span>${roomData[0].reduce((sum, room) => sum + room.available_rooms, 0)}</span> Total Rooms Available</h5>
+            <h5><span>${Math.floor(hotelData[0][0].mrp)}</span>Rs / night (starting)</h5>
+            <h5><span>${Math.floor(hotelData[0][0].discount)}</span>% Discount</h5>
         </div>
          `;
          let h3 = document.createElement('h3');
-         h3.innerText = data[0][0].name;
+         h3.innerText = hotelData[0][0].name;
 
          document.getElementsByClassName('hotelBook')[0].prepend(div);
          document.getElementsByClassName('hotelBook')[0].prepend(h3);
@@ -294,25 +498,25 @@
 
         //  Amenities 
 
-        data[0][0].services.split(',').forEach(element => {
+        hotelData[0][0].services.split(',').forEach(element => {
             let li = document.createElement('li');
             li.innerText = element;
             document.getElementsByClassName('hotelAmenities')[0].appendChild(li);
         });
 
-        data[0][0].food.split(',').forEach(element => {
+        hotelData[0][0].food.split(',').forEach(element => {
             let li = document.createElement('li');
             li.innerText = element;
             document.getElementsByClassName('hotelAmenities')[0].appendChild(li);
         });
 
         let desc = document.createElement('p');
-        desc.innerText = data[0][0].description;
+        desc.innerText = hotelData[0][0].description;
         document.getElementsByClassName('contentSecLeft')[0].append(desc);
         
         // Map 
-        let lat = data[0][0].lat;
-        let log = data[0][0].log;
+        let lat = hotelData[0][0].lat;
+        let log = hotelData[0][0].log;
         
         let map= document.createElement('iframe');
         map.setAttribute('id' , "map");
@@ -328,14 +532,65 @@
 
 
         
-        // Booking Details 
+        // Room Selection
+        let roomSelection = document.createElement('div');
+        roomSelection.className = 'roomSelection';
+        roomSelection.innerHTML = `
+            <h3>Select Your Room</h3>
+            <div class="capacity-notice">
+                <p><i class="fas fa-info-circle"></i> You are booking for <strong>${peopleValue} guest${peopleValue > 1 ? 's' : ''}</strong>. Please select a room that can accommodate your group size.</p>
+            </div>
+            <div class="roomOptions">
+        `;
 
-        // Stars
+        // Add room options
+        console.log('About to process rooms:', roomData[0]);
+        if (Array.isArray(roomData[0])) {
+            roomData[0].forEach(room => {
+            const isCapacityMatch = room.capacity >= peopleValue;
+            const capacityClass = isCapacityMatch ? '' : 'capacity-warning';
+            const buttonText = isCapacityMatch ? 'Select This Room' : `Only ${room.capacity} guests max`;
+            const buttonDisabled = isCapacityMatch ? '' : 'disabled';
+            
+            roomSelection.innerHTML += `
+                <div class="roomCard ${capacityClass}" data-room-id="${room.id}" data-room-type="${room.room_type}" data-price="${room.price_per_night}" data-capacity="${room.capacity}">
+                    <div class="roomHeader">
+                        <h4>${room.room_type}</h4>
+                        <div class="roomPrice">₹${room.price_per_night}/night</div>
+                    </div>
+                    <div class="roomDetails">
+                        <p><i class="fas fa-users"></i> Up to ${room.capacity} guests ${isCapacityMatch ? '' : '<span class="capacity-warning-text">(Not enough for your group)</span>'}</p>
+                        <p><i class="fas fa-concierge-bell"></i> ${room.amenities}</p>
+                        <p><i class="fas fa-check-circle"></i> ${room.available_rooms} rooms available</p>
+                    </div>
+                    <button class="selectRoomBtn" onclick="${isCapacityMatch ? `selectRoom(${room.id}, '${room.room_type}', ${room.price_per_night}, ${room.capacity})` : ''}" ${buttonDisabled}>${buttonText}</button>
+                </div>
+            `;
+        });
+        } else {
+            console.error('Room data is not an array:', roomData[0]);
+            // Handle case where roomData[0] is not an array
+            roomSelection.innerHTML += `
+                <div class="roomError">
+                    <p><i class="fas fa-exclamation-triangle"></i> Unable to load room information.</p>
+                    <p>Please try again or contact support.</p>
+                </div>
+            `;
+        }
+
+        roomSelection.innerHTML += `</div>`;
+
+        // Insert room selection before booking details
+        let contentSec = document.getElementsByClassName('contentSec')[0];
+        contentSec.parentNode.insertBefore(roomSelection, contentSec.nextSibling);
+        
+        
+        let bookingDetails = document.getElementsByClassName('bookingDetails')[0];
        
-        const fullStars = Math.floor(data[0][0].rate);
+        const fullStars = Math.floor(hotelData[0][0].rate);
         let halfStar = 0;
-        if (data[0][0].rate.split('.').length > 1) {
-             halfStar = data[0][0].rate.split('.')[1] >= 50 ? 1 : 0;
+        if (hotelData[0][0].rate.split('.').length > 1) {
+             halfStar = hotelData[0][0].rate.split('.')[1] >= 50 ? 1 : 0;
         }
 
         const starHtml = `
@@ -365,21 +620,18 @@
 
         // Nights 
         const diffTime = date2 - date1;
-        const nights = diffTime / (1000 * 60 * 60 * 24 );
+        nights = diffTime / (1000 * 60 * 60 * 24 );
 
-
-        
-        let bookingDetails = document.getElementsByClassName('bookingDetails')[0];
         bookingDetails.innerHTML = `
          <div class="hotelBookContent">
             <div class="contents">
-                <h4>${data[0][0].name}</h4>
+                <h4>${hotelData[0][0].name}</h4>
                 <h5>
     ${starHtml}
                      <span>Couple Friendly</span></h5>
-                     <h6>${data[0][0].location}</h6>
+                     <h6>${hotelData[0][0].location}</h6>
             </div>
-            <img src="<?php echo base_url('/assets/img/Hotels-photos/');?>${data[0][0].poster}" alt="">
+            <img src="<?php echo base_url('/assets/img/Hotels-photos/');?>${hotelData[0][0].poster}" alt="">
         </div>
 
         <div class="hotelBookCheckIN-out">
@@ -400,7 +652,7 @@
             <div class="checkIN checkIN2">
                 <span><b>${nights}</b> Nights</span>
                 <span><b>${peopleValue}</b> People</span>
-                <span><b>1</b> Room</span>
+                <span><b>${selectedRoomId ? Math.ceil(peopleValue / getSelectedRoomCapacity()) : '1'}</b> Room${selectedRoomId && Math.ceil(peopleValue / getSelectedRoomCapacity()) > 1 ? 's' : ''}</span>
             </div>
 
 
@@ -413,21 +665,28 @@
         let submit = document.getElementById('submit')
         submit.addEventListener('click' , () => {
             if (checkLogin) {
-                console.log()
+                console.log('Booking attempt for user:', checkLogin);
                 if (document.getElementById('mobile').value != '' && document.getElementById('email').value != '' && document.getElementById('name').value != '') {
+                    // Check if a room is selected
+                    if (!selectedRoomId) {
+                        alert('Please select a room before booking');
+                        return;
+                    }
                     roomBook(
-                        data[0][0].id,
-                        data[0][0].name,
+                        hotelData[0][0].id,
+                        hotelData[0][0].name,
                         date1,
                         date2,
                         checkLogin,
-                        data[0][0].mrp * nights,
+                        selectedRoomPrice * nights * Math.ceil(peopleValue / selectedRoomCapacity), // Total price for all rooms
                         peopleValue,
-                        data[0][0].discount,
+                        hotelData[0][0].discount,
                         document.getElementById('name').value ,
                         document.getElementById('email').value ,
                         document.getElementById('mobile').value,
-                        nights
+                        nights,
+                        selectedRoomId,
+                        selectedRoomType
                     )
                 } else {
                     alert('Please fill all inputs');
@@ -435,52 +694,154 @@
                 }
             } else {
                 login_signup.classList.toggle('login_signup_ll');
-                login_signup.classList.remove('login_signup_ss');
+                login_signup.classList.remove('modal_signup_ss');
             }
-        })
+        });
         
+        console.log('✅ Event listener setup complete');
+
+        } // Close if (hotelData && roomData)
         
-
-
-        }
+        console.log('✅ Exiting try block successfully');
+        
     } catch (error) {
-        console.error(error);
+        console.error('❌ ERROR in fetchData:', error);
+        console.error('❌ Error stack:', error.stack);
+        // Handle error - show user friendly message
+        const contentSec = document.getElementsByClassName('contentSec')[0];
+        if (contentSec) {
+            contentSec.innerHTML = `
+                <div class="error-message" style="text-align: center; padding: 20px; color: red;">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Error Loading Hotel Data</h3>
+                    <p>Please try refreshing the page or contact support if the problem persists.</p>
+                </div>
+            `;
+        }
     }
-
-   }
+   };
+   
+   console.log('✅ fetchData function defined');
 
    fetchData(hotelID);
+   console.log('🎬 fetchData execution started');
 
+   // Global variables for selected room
+   let selectedRoomId = null;
+   let selectedRoomType = null;
+   let selectedRoomPrice = null;
+   let selectedRoomCapacity = null;
+   
+   console.log('✅ Global room selection variables initialized');
 
-
-   let roomBook = async (hotelID , hotelName , startDate , endDate , userID , price , pepoleValue , discount , bookingName , bookingEmail , bookingPhone , nights ) => {
-
-    let data = {
-        hotelID , hotelName , startDate , endDate , userID , price , pepoleValue , discount , bookingName , bookingEmail , bookingPhone , nights
-    }
-
-    try {
-        let response = await fetch("<?php echo base_url('Welcome/bookRoom')?>" , {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-
-        let result = await response.json();
-
-        if (result.status == 'success') {
-            alert(result.message);
-            window.location.href = "<?php echo base_url('/order')?>";
-        } else {
-            alert(result.message);
-        }
-    } catch (error) {
-        console.error(error);
-    }
-
+   function getSelectedRoomCapacity() {
+       return selectedRoomCapacity || 2; // Default fallback
    }
+
+   function selectRoom(roomId, roomType, price, capacity) {
+       console.log('🎯 Room selected:', { roomId, roomType, price, capacity });
+       // Remove previous selection
+       document.querySelectorAll('.roomCard').forEach(card => {
+           card.classList.remove('selected');
+       });
+
+       // Add selection to clicked room
+       event.target.closest('.roomCard').classList.add('selected');
+
+       // Store selected room data
+       selectedRoomId = roomId;
+       selectedRoomType = roomType;
+       selectedRoomPrice = price;
+       selectedRoomCapacity = capacity;
+
+       // Update booking details with selected room
+       updateBookingDetails(roomType, price);
+
+       console.log('Selected Room:', { roomId, roomType, price, capacity });
+   }
+
+   function updateBookingDetails(roomType, price) {
+       console.log('🔄 updateBookingDetails called with:', { roomType, price, nights, peopleValue, selectedRoomCapacity });
+       
+       // Update the booking summary to show selected room
+       let bookingDetails = document.getElementsByClassName('bookingDetails')[0];
+       if (bookingDetails) {
+           // Update room count in the existing display
+           let roomCountSpan = bookingDetails.querySelector('.checkIN2 span:nth-child(3) b');
+           if (roomCountSpan) {
+               let roomsNeeded = selectedRoomCapacity > 0 ? Math.ceil(peopleValue / selectedRoomCapacity) : 1;
+               roomCountSpan.textContent = roomsNeeded;
+               
+               // Update the "Room" vs "Rooms" text
+               let roomText = roomCountSpan.nextSibling;
+               if (roomText) {
+                   roomText.textContent = roomsNeeded > 1 ? ' Rooms' : ' Room';
+               }
+           }
+           
+           let roomInfo = bookingDetails.querySelector('.roomInfo');
+           if (!roomInfo) {
+               roomInfo = document.createElement('div');
+               roomInfo.className = 'roomInfo';
+               bookingDetails.appendChild(roomInfo);
+           }
+           
+           let roomsNeeded = selectedRoomCapacity > 0 ? Math.ceil(peopleValue / selectedRoomCapacity) : 1;
+           let totalPrice = price * nights * roomsNeeded;
+           
+           console.log('💰 Price calculation:', { price, nights, roomsNeeded, totalPrice });
+           
+           roomInfo.innerHTML = `
+               <div class="selectedRoom">
+                   <h5>Selected Room: ${roomType}</h5>
+                   <p>Price per night: ₹${price}</p>
+                   <p>Rooms needed: ${roomsNeeded}</p>
+                   <p><strong>Total Price: ₹${totalPrice}</strong></p>
+               </div>
+           `;
+       }
+   }
+
+
+
+   let roomBook = async (hotelID, hotelName, startDate, endDate, userID, price, peopleValue, discount, bookingName, bookingEmail, bookingPhone, nights, roomId, roomType) => {
+       console.log('📝 roomBook called with:', { hotelID, hotelName, startDate, endDate, userID, price, peopleValue, discount, bookingName, bookingEmail, bookingPhone, nights, roomId, roomType });
+       
+       try {
+           let data = {
+               hotelID, hotelName, startDate, endDate, userID, price, peopleValue, discount, bookingName, bookingEmail, bookingPhone, nights, roomId, roomType
+           };
+           
+           console.log('📤 Sending booking request:', data);
+
+           let response = await fetch("<?php echo base_url('Welcome/bookRoom')?>", {
+               method: 'POST',
+               headers: {
+                   "Content-Type": "application/json"
+               },
+               body: JSON.stringify(data)
+           });
+
+           let result = await response.json();
+           
+           console.log('📥 Booking response:', result);
+
+           if (result.status == 'success') {
+               console.log('✅ Booking successful!');
+               alert(result.message);
+               window.location.href = "<?php echo base_url('/order')?>";
+           } else {
+               console.log('❌ Booking failed:', result.message);
+               alert(result.message);
+           }
+       } catch (error) {
+           console.error('❌ Error in roomBook:', error);
+           console.error('❌ Error stack:', error.stack);
+           alert('An error occurred while booking. Please try again.');
+       }
+   };
+   
+   console.log('✅ All functions defined - Script ready');
+   
  </script>
 
 </main>

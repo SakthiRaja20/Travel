@@ -236,6 +236,80 @@
         .demo-card p {
             font-size: 11px;
         }
+
+        .demo-btn small {
+            font-size: 10px;
+        }
+    }
+
+    /* Demo Button Styles */
+    .demo-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 12px 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: left;
+        color: white;
+        width: 100%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .demo-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    }
+
+    .demo-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .demo-btn.loading {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .demo-btn.loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-top: 2px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .demo-btn h4 {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .demo-btn p {
+        margin: 4px 0;
+        font-size: 12px;
+        opacity: 0.9;
+    }
+
+    .demo-btn.admin-demo {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .demo-btn.admin-demo:hover {
+        background: linear-gradient(135deg, #e083eb 0%, #e5475c 100%);
     }
 </style>
 
@@ -269,16 +343,18 @@
         
         <!-- Demo Credentials -->
         <div class="demo-credentials">
-            <div class="demo-card">
+            <button class="demo-card demo-btn" onclick="fillDemoCredentials('user')" data-type="user">
                 <h4>👤 Demo User</h4>
                 <p><strong>Mobile:</strong> 1234567890</p>
                 <p><strong>Password:</strong> 123456</p>
-            </div>
-            <div class="demo-card admin-demo">
+                <small style="display: block; margin-top: 8px; opacity: 0.8;">Click to auto-login</small>
+            </button>
+            <button class="demo-card demo-btn admin-demo" onclick="fillDemoCredentials('admin')" data-type="admin">
                 <h4>👑 Admin</h4>
                 <p><strong>Username:</strong> admin</p>
                 <p><strong>Password:</strong> admin@123</p>
-            </div>
+                <small style="display: block; margin-top: 8px; opacity: 0.8;">Click to auto-login</small>
+            </button>
         </div>
         
         <form id="loginForm">
@@ -338,6 +414,30 @@
             closeModal();
         }
     });
+
+    // Demo credentials auto-fill function
+    function fillDemoCredentials(type) {
+        const mobileInput = document.getElementById('login_mobile');
+        const passwordInput = document.getElementById('login_password');
+        const button = event.target.closest('.demo-btn');
+        
+        // Add loading state
+        button.classList.add('loading');
+        button.innerHTML = '<h4>🔄 Logging in...</h4><p>Please wait...</p>';
+        
+        if (type === 'user') {
+            mobileInput.value = '1234567890';
+            passwordInput.value = '123456';
+        } else if (type === 'admin') {
+            mobileInput.value = 'admin';
+            passwordInput.value = 'admin@123';
+        }
+        
+        // Auto-submit the login form after filling credentials
+        setTimeout(() => {
+            document.getElementById('login').click();
+        }, 800);
+    }
  </script>
 
  <script>
@@ -424,6 +524,8 @@
         }
     });
 
+
+ </script>
 
  </script>
 
@@ -520,6 +622,33 @@
         
         window.location.href = `<?php echo base_url('Welcome/result');?>?${city}?${startDate}?${endDate}?2`;
     }
+</script>
+
+<script>
+// Sticky navbar fallback for browsers that don't support CSS sticky positioning
+(function() {
+    const header = document.querySelector('header');
+    let lastScrollTop = 0;
+    
+    function makeSticky() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Add fixed positioning as fallback for older browsers
+        if (scrollTop > 0 && !CSS.supports('position', 'sticky')) {
+            header.style.position = 'fixed';
+            header.style.top = '0';
+            header.style.width = '100%';
+            header.style.zIndex = '1000';
+            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        }
+    }
+    
+    // Apply fallback for browsers that don't support sticky positioning
+    if (!CSS.supports('position', 'sticky') && !CSS.supports('position', '-webkit-sticky')) {
+        console.log('Using JavaScript sticky fallback');
+        window.addEventListener('scroll', makeSticky);
+    }
+})();
 </script>
     
 </body>
