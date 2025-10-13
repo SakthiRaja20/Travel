@@ -52,6 +52,8 @@ b. Create a new database named **`travel`**.
 
 c. Import the **`travel.sql`** file (located in the project directory) into the newly created **`travel`** database.
 
+d. For detailed database management instructions, including schema updates and maintenance procedures, refer to the **`DATABASE.md`** file in the project root.
+
 |br|
 
 ---------------------------------------------------

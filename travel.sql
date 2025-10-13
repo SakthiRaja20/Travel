@@ -344,6 +344,7 @@ CREATE TABLE `users` (
   `id` int(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `mobile` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `gender` enum('Male','Female') NOT NULL DEFAULT 'Male',
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
@@ -353,11 +354,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `mobile`, `password`, `gender`, `timestamp`) VALUES
-(9, 'kdscoder', '456123789', '202cb962ac59075b964b07152d234b70', 'Male', '2025-03-20 18:25:09'),
-(10, 'jahid khan', '1234567890', 'e10adc3949ba59abbe56e057f20f883e', 'Male', '2025-03-20 18:34:58'),
-(11, 'Amit', '789456123', '827ccb0eea8a706c4c34a16891f84e7b', 'Female', '2025-03-20 19:06:05'),
-(12, 'KdscoderNew', '7894561230', 'e10adc3949ba59abbe56e057f20f883e', 'Male', '2025-05-31 09:31:41');
+INSERT INTO `users` (`id`, `name`, `mobile`, `email`, `password`, `gender`, `timestamp`) VALUES
+(9, 'kdscoder', '456123789', 'kdscoder@example.com', '202cb962ac59075b964b07152d234b70', 'Male', '2025-03-20 18:25:09'),
+(10, 'jahid khan', '1234567890', 'jahid.khan@example.com', 'e10adc3949ba59abbe56e057f20f883e', 'Male', '2025-03-20 18:34:58'),
+(11, 'Amit', '789456123', 'amit@example.com', '827ccb0eea8a706c4c34a16891f84e7b', 'Female', '2025-03-20 19:06:05'),
+(12, 'KdscoderNew', '7894561230', 'kdscodernew@example.com', 'e10adc3949ba59abbe56e057f20f883e', 'Male', '2025-05-31 09:31:41');
 
 --
 -- Indexes for dumped tables

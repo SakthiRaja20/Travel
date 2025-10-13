@@ -348,23 +348,9 @@
     <h4>Booking Details</h4>
     <div class="bookingDetails"></div>
 
-    <h4>Guest Details</h4>
-
     <div class="alternativeDetails">
-        <div class="formCard">
-            <label for="">Name</label>
-            <input type="text" placeholder="Name" id="name">
-        </div>
-        <div class="formCard">
-            <label for="">Email</label>
-            <input type="email" placeholder="Email" id="email">
-        </div>
-        <div class="formCard">
-            <label for="">Mobile</label>
-            <input type="number" placeholder="Mobile" id="mobile">
-        </div>
-        <div class="formCard">
-            <input type="submit" id="submit" value="Book Now">
+        <div style="width: 100%; text-align: right;">
+            <button type="submit" id="submit" class="submit-btn" style="background: #037b83; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background 0.3s;">Book Now</button>
         </div>
     </div>
 
@@ -389,7 +375,7 @@
     console.log('🔄 fetchData called for hotel:', hotelID);
 
     const requestData = {
-        hotelID
+        id: hotelID
     };
 
     try {
@@ -491,6 +477,10 @@
          `;
          let h3 = document.createElement('h3');
          h3.innerText = hotelData[0][0].name;
+
+         // Store hotel discount for price calculations
+         window.hotelDiscount = parseFloat(hotelData[0][0].discount);
+         console.log('💰 Hotel discount loaded:', window.hotelDiscount);
 
          document.getElementsByClassName('hotelBook')[0].prepend(div);
          document.getElementsByClassName('hotelBook')[0].prepend(h3);
@@ -663,39 +653,34 @@
         let checkLogin = <?php echo json_encode($this->session->userdata('userdata')['id'] ?? null); ?>
 
         let submit = document.getElementById('submit')
-        submit.addEventListener('click' , () => {
-            if (checkLogin) {
-                console.log('Booking attempt for user:', checkLogin);
-                if (document.getElementById('mobile').value != '' && document.getElementById('email').value != '' && document.getElementById('name').value != '') {
-                    // Check if a room is selected
-                    if (!selectedRoomId) {
-                        alert('Please select a room before booking');
-                        return;
-                    }
-                    roomBook(
-                        hotelData[0][0].id,
-                        hotelData[0][0].name,
-                        date1,
-                        date2,
-                        checkLogin,
-                        selectedRoomPrice * nights * Math.ceil(peopleValue / selectedRoomCapacity), // Total price for all rooms
-                        peopleValue,
-                        hotelData[0][0].discount,
-                        document.getElementById('name').value ,
-                        document.getElementById('email').value ,
-                        document.getElementById('mobile').value,
-                        nights,
-                        selectedRoomId,
-                        selectedRoomType
-                    )
-                } else {
-                    alert('Please fill all inputs');
-                    
-                }
-            } else {
+        submit.addEventListener('click', () => {
+            if (!checkLogin) {
                 login_signup.classList.toggle('login_signup_ll');
                 login_signup.classList.remove('modal_signup_ss');
+                return;
             }
+            
+            console.log('Booking attempt for user:', checkLogin);
+            
+            // Check if a room is selected
+            if (!selectedRoomId) {
+                alert('Please select a room before booking');
+                return;
+            }
+
+            roomBook(
+                hotelData[0][0].id,
+                hotelData[0][0].name,
+                date1,
+                date2,
+                checkLogin,
+                selectedRoomPrice * nights * Math.ceil(peopleValue / selectedRoomCapacity), // Total price for all rooms
+                peopleValue,
+                hotelData[0][0].discount,
+                nights,
+                selectedRoomId,
+                selectedRoomType
+            );
         });
         
         console.log('✅ Event listener setup complete');
@@ -765,10 +750,20 @@
        // Update the booking summary to show selected room
        let bookingDetails = document.getElementsByClassName('bookingDetails')[0];
        if (bookingDetails) {
-           // Update room count in the existing display
+           // Calculate rooms needed based on people and room capacity
+           let roomsNeeded = selectedRoomCapacity > 0 ? Math.ceil(peopleValue / selectedRoomCapacity) : 1;
+           
+           // Calculate total price including nights and rooms needed
+           let totalPrice = price * nights * roomsNeeded;
+           
+           // Calculate discount if applicable
+           if (typeof hotelDiscount !== 'undefined' && hotelDiscount > 0) {
+               totalPrice = totalPrice * (1 - (hotelDiscount / 100));
+           }
+           
+           // Update room count display
            let roomCountSpan = bookingDetails.querySelector('.checkIN2 span:nth-child(3) b');
            if (roomCountSpan) {
-               let roomsNeeded = selectedRoomCapacity > 0 ? Math.ceil(peopleValue / selectedRoomCapacity) : 1;
                roomCountSpan.textContent = roomsNeeded;
                
                // Update the "Room" vs "Rooms" text
@@ -778,6 +773,7 @@
                }
            }
            
+           // Update or create room info section
            let roomInfo = bookingDetails.querySelector('.roomInfo');
            if (!roomInfo) {
                roomInfo = document.createElement('div');
@@ -785,17 +781,25 @@
                bookingDetails.appendChild(roomInfo);
            }
            
-           let roomsNeeded = selectedRoomCapacity > 0 ? Math.ceil(peopleValue / selectedRoomCapacity) : 1;
-           let totalPrice = price * nights * roomsNeeded;
+           console.log('💰 Price calculation:', { 
+               basePrice: price,
+               nights: nights,
+               roomsNeeded: roomsNeeded,
+               discount: typeof hotelDiscount !== 'undefined' ? hotelDiscount : 0,
+               totalPrice: totalPrice
+           });
            
-           console.log('💰 Price calculation:', { price, nights, roomsNeeded, totalPrice });
+           // Store calculated total price for booking
+           window.calculatedTotalPrice = totalPrice;
            
            roomInfo.innerHTML = `
                <div class="selectedRoom">
                    <h5>Selected Room: ${roomType}</h5>
                    <p>Price per night: ₹${price}</p>
                    <p>Rooms needed: ${roomsNeeded}</p>
-                   <p><strong>Total Price: ₹${totalPrice}</strong></p>
+                   ${typeof hotelDiscount !== 'undefined' && hotelDiscount > 0 ? 
+                       `<p>Discount: ${hotelDiscount}%</p>` : ''}
+                   <p><strong>Total Price: ₹${totalPrice.toFixed(2)}</strong></p>
                </div>
            `;
        }
@@ -803,12 +807,60 @@
 
 
 
-   let roomBook = async (hotelID, hotelName, startDate, endDate, userID, price, peopleValue, discount, bookingName, bookingEmail, bookingPhone, nights, roomId, roomType) => {
-       console.log('📝 roomBook called with:', { hotelID, hotelName, startDate, endDate, userID, price, peopleValue, discount, bookingName, bookingEmail, bookingPhone, nights, roomId, roomType });
-       
+   let roomBook = async (hotelID, hotelName, startDate, endDate, userID, price, peopleValue, discount, nights, roomId, roomType) => {
        try {
+           // Get user data from PHP session
+           const userdata = <?php echo json_encode($this->session->userdata('userdata')); ?>;
+           
+           // Validate dates
+           const checkIn = new Date(startDate);
+           const checkOut = new Date(endDate);
+           const today = new Date();
+           today.setHours(0, 0, 0, 0);
+
+           if (checkIn < today) {
+               alert('Check-in date cannot be in the past');
+               return;
+           }
+
+           if (checkOut <= checkIn) {
+               alert('Check-out date must be after check-in date');
+               return;
+           }
+
+           // Use the calculated total price from updateBookingDetails
+           const finalPrice = window.calculatedTotalPrice || price;
+
+           console.log('📝 roomBook called with:', { 
+               hotelID, hotelName, startDate, endDate, userID, price: finalPrice, 
+               peopleValue, discount, nights, roomId, roomType,
+               userData: {
+                   name: userdata.name,
+                   email: userdata.email,
+                   mobile: userdata.mobile
+               }
+           });
+           
+           // Format dates for MySQL (YYYY-MM-DD HH:mm:ss)
+           const formatDateForMySQL = (date) => {
+               return date.toISOString().slice(0, 19).replace('T', ' ');
+           };
+
            let data = {
-               hotelID, hotelName, startDate, endDate, userID, price, peopleValue, discount, bookingName, bookingEmail, bookingPhone, nights, roomId, roomType
+               hotelID, 
+               hotelName, 
+               startDate: formatDateForMySQL(startDate),
+               endDate: formatDateForMySQL(endDate),
+               userID, 
+               price: finalPrice, // Send the calculated total price
+               peopleValue, 
+               discount,
+               bookingName: userdata.name,
+               bookingEmail: userdata.email,
+               bookingPhone: userdata.mobile,
+               nights, 
+               roomId, 
+               roomType
            };
            
            console.log('📤 Sending booking request:', data);
@@ -827,6 +879,11 @@
 
            if (result.status == 'success') {
                console.log('✅ Booking successful!');
+               // Store booking success in session storage to prevent double booking on refresh
+               sessionStorage.setItem('lastSuccessfulBooking', JSON.stringify({
+                   roomId: roomId,
+                   timestamp: new Date().getTime()
+               }));
                alert(result.message);
                window.location.href = "<?php echo base_url('/order')?>";
            } else {

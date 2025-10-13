@@ -15,13 +15,13 @@ class User extends CI_Controller {
 	{
 		$name = $this->input->post('name');
 		$mobile = $this->input->post('mobile');
+		$email = $this->input->post('email') ?? $mobile . '@example.com';  // Use mobile as fallback
 		$password = md5($this->input->post('password'));
 		$gender = $this->input->post('gender');
 
+		$query = "INSERT INTO users(name, mobile, email, password, gender) VALUES (?, ?, ?, ?, ?)";
 
-		$query = "INSERT INTO users(name, mobile, password , gender) VALUES (?, ? ,? ,?)";
-
-		$this->db->query($query , array($name ,$mobile,$password, $gender));
+		$this->db->query($query , array($name, $mobile, $email, $password, $gender));
 
 		echo json_encode(["status" => "success" , "message" => "Signup successful"]);
 
@@ -58,6 +58,7 @@ class User extends CI_Controller {
 				'id' => $result['id'],
 				'name' => $result['name'],
 				'mobile' => $result['mobile'],
+				'email' => $result['email'] ?? $result['mobile'] . '@example.com', // Fallback email if not set
 				'is_admin' => false
 			];
 
