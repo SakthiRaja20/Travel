@@ -323,11 +323,17 @@
     <div class="signupBx">
         <h2>Create Account</h2>
         <p class="subtitle">Join us to start your journey</p>
-        <form id="signupForm">
-            <input type="text" id="signup_name" placeholder="Full Name" required>
-            <input type="number" id="signup_mobile" placeholder="Mobile Number" required>
-            <input type="password" id="signup_password" placeholder="Password" required>
-            <select name="" id="signup_gender" required>
+        <form id="signupForm" novalidate>
+            <input type="text" id="signup_name" placeholder="Full Name" required 
+                pattern="^[a-zA-Z ]{2,50}$" 
+                title="Please enter a valid name (2-50 characters, letters only)">
+            <input type="tel" id="signup_mobile" placeholder="Mobile Number" required 
+                pattern="^[0-9]{10}$" 
+                title="Please enter a valid 10-digit mobile number">
+            <input type="password" id="signup_password" placeholder="Password" required 
+                minlength="6"
+                title="Password must be at least 6 characters">
+            <select name="gender" id="signup_gender" required>
                 <option value="" disabled selected>Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -357,9 +363,12 @@
             </button>
         </div>
         
-        <form id="loginForm">
-            <input type="text" id="login_mobile" placeholder="Username or Mobile Number" required>
-            <input type="password" id="login_password" placeholder="Password" required>
+        <form id="loginForm" novalidate>
+            <input type="text" id="login_mobile" placeholder="Username or Mobile Number" required
+                pattern="^[0-9]{10}$|^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                title="Please enter a valid mobile number or email address">
+            <input type="password" id="login_password" placeholder="Password" required
+                minlength="6" title="Password must be at least 6 characters">
             <button type="submit" id="login">Login</button>
         </form>
         <p class="switch-text">Don't have an account? <a href="#" onclick="switchToSignup(event)">Sign up</a></p>
@@ -443,9 +452,66 @@
  <script>
     let base_url = "<?php echo base_url('user/');?>";
 
+    // Form validation
+    function validateLoginForm() {
+        const mobile = document.getElementById('login_mobile');
+        const password = document.getElementById('login_password');
+        
+        if (!mobile.value) {
+            alert('Please enter your mobile number or username');
+            return false;
+        }
+        if (!password.value) {
+            alert('Please enter your password');
+            return false;
+        }
+        if (password.value.length < 6) {
+            alert('Password must be at least 6 characters long');
+            return false;
+        }
+        return true;
+    }
+
+    function validateSignupForm() {
+        const name = document.getElementById('signup_name');
+        const mobile = document.getElementById('signup_mobile');
+        const password = document.getElementById('signup_password');
+        const gender = document.getElementById('signup_gender');
+
+        if (!name.value.trim()) {
+            alert('Please enter your name');
+            return false;
+        }
+        if (!mobile.value) {
+            alert('Please enter your mobile number');
+            return false;
+        }
+        if (mobile.value.length !== 10) {
+            alert('Mobile number must be 10 digits');
+            return false;
+        }
+        if (!password.value) {
+            alert('Please enter a password');
+            return false;
+        }
+        if (password.value.length < 6) {
+            alert('Password must be at least 6 characters');
+            return false;
+        }
+        if (!gender.value) {
+            alert('Please select your gender');
+            return false;
+        }
+        return true;
+    }
+
     // Login 
     document.getElementById('login').addEventListener('click' , async (e) => {
         e.preventDefault();
+        
+        if (!validateLoginForm()) {
+            return;
+        }
 
         let form = new FormData();
         form.append('mobile', document.getElementById('login_mobile').value);
@@ -478,6 +544,10 @@
     // signup 
     document.getElementById('signup')?.addEventListener('click' , async (e) => {
         e.preventDefault();
+
+        if (!validateSignupForm()) {
+            return;
+        }
 
         let form = new FormData();
         form.append('name', document.getElementById('signup_name').value);
@@ -537,9 +607,25 @@
             <h2>Subscribe & Get Special Discounts</h2>
             <p>Be the first to know about new destinations, travel inspiration, and exclusive deals</p>
             <div class="newsletter-input">
-                <input type="email" placeholder="Enter your email address" id="newsletter-email">
-                <button onclick="subscribeNewsletter()">Subscribe</button>
+                <input type="email" placeholder="Enter your email address" id="newsletter-email" 
+                    required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                    title="Please enter a valid email address">
+                <button onclick="validateAndSubscribe()">Subscribe</button>
             </div>
+            <script>
+                function validateAndSubscribe() {
+                    const emailInput = document.getElementById('newsletter-email');
+                    if (!emailInput.value) {
+                        alert('Please enter your email address');
+                        return;
+                    }
+                    if (!emailInput.checkValidity()) {
+                        alert('Please enter a valid email address');
+                        return;
+                    }
+                    subscribeNewsletter();
+                }
+            </script>
         </div>
 
         <!-- Footer Links -->

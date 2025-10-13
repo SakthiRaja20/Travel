@@ -14,38 +14,131 @@
                 <div class="search-fields">
                     <div class="card">
                         <h4>Location <i class="bi bi-caret-down-fill"></i></h4>
-                        <input type="text" placeholder="Enter your destination" id="destination">
+                        <input type="text" placeholder="Enter your destination" id="destination" required
+                               pattern="[A-Za-z\s]+" title="Please enter a valid destination name">
                     </div>
                     <div class="card">
                         <h4>Start Date <i class="bi bi-caret-down-fill"></i></h4>
-                        <input type="date" id="startDate">
+                        <input type="date" id="startDate" required min="<?php echo date('Y-m-d'); ?>">
                     </div>
                     <div class="card">
                         <h4>End Date <i class="bi bi-caret-down-fill"></i></h4>
-                        <input type="date" id="endDate">
+                        <input type="date" id="endDate" required>
                     </div>
                     <div class="card">
                         <h4>People <i class="bi bi-caret-down-fill"></i></h4>
-                        <input type="number" placeholder="How many People?" id="people" min="1">
+                        <input type="number" placeholder="How many People?" id="people" min="1" max="10" required
+                               title="Please enter a number between 1 and 10">
                     </div>
                 </div>
-                <input type="button" value="Explore Now" id="submit">
+                <input type="button" value="Explore Now" id="submit" onclick="handleSearch()">
             </div>
+
+            <script>
+                // Initialize with today's date and tomorrow as default values
+                window.addEventListener('DOMContentLoaded', (event) => {
+                    const today = new Date();
+                    const tomorrow = new Date(today);
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+
+                    document.getElementById('startDate').min = today.toISOString().split('T')[0];
+                    document.getElementById('startDate').value = today.toISOString().split('T')[0];
+                    
+                    document.getElementById('endDate').min = tomorrow.toISOString().split('T')[0];
+                    document.getElementById('endDate').value = tomorrow.toISOString().split('T')[0];
+                    
+                    document.getElementById('people').value = "2";
+                });
+
+                // Update end date min value when start date changes
+                document.getElementById('startDate').addEventListener('change', function() {
+                    const startDate = new Date(this.value);
+                    const nextDay = new Date(startDate);
+                    nextDay.setDate(nextDay.getDate() + 1);
+                    document.getElementById('endDate').min = nextDay.toISOString().split('T')[0];
+                    
+                    // If end date is before start date, update it
+                    const endDate = new Date(document.getElementById('endDate').value);
+                    if (endDate <= startDate) {
+                        document.getElementById('endDate').value = nextDay.toISOString().split('T')[0];
+                    }
+                });
+
+                function handleSearch() {
+                    if (validateSearchForm()) {
+                        // Proceed with search
+                        const searchData = {
+                            destination: document.getElementById('destination').value.trim(),
+                            startDate: document.getElementById('startDate').value,
+                            endDate: document.getElementById('endDate').value,
+                            people: document.getElementById('people').value
+                        };
+                        
+                        // Show loading state
+                        const submitBtn = document.getElementById('submit');
+                        const originalValue = submitBtn.value;
+                        submitBtn.value = 'Searching...';
+                        submitBtn.disabled = true;
+
+                        // Proceed with the existing search functionality
+                        submit();
+
+                        // Reset button after a short delay
+                        setTimeout(() => {
+                            submitBtn.value = originalValue;
+                            submitBtn.disabled = false;
+                        }, 1000);
+                    }
+                }
+            </script>
 
             <script>
                 function validateSearchForm() {
                     const destination = document.getElementById('destination').value.trim();
-                    const startDate = document.getElementById('startDate').value.trim();
-                    const endDate = document.getElementById('endDate').value.trim();
+                    const startDate = document.getElementById('startDate').value;
+                    const endDate = document.getElementById('endDate').value;
                     const people = document.getElementById('people').value.trim();
 
+                    // Check if all fields are filled
                     if (!destination || !startDate || !endDate || !people) {
-                        alert('Please fill all fields');
+                        alert('Please fill in all fields');
                         return false;
                     }
 
-                    if (isNaN(people) || parseInt(people) < 1) {
-                        alert('Please enter a valid number of people');
+                    // Validate destination (only letters and spaces)
+                    if (!/^[A-Za-z\s]+$/.test(destination)) {
+                        alert('Please enter a valid destination name (letters only)');
+                        return false;
+                    }
+
+                    // Validate dates
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+
+                    if (start < today) {
+                        alert('Start date cannot be in the past');
+                        return false;
+                    }
+
+                    if (end <= start) {
+                        alert('End date must be after start date');
+                        return false;
+                    }
+
+                    // Maximum stay validation (e.g., 30 days)
+                    const maxStayDays = 30;
+                    const daysDifference = (end - start) / (1000 * 60 * 60 * 24);
+                    if (daysDifference > maxStayDays) {
+                        alert(`Maximum stay duration is ${maxStayDays} days`);
+                        return false;
+                    }
+
+                    // Validate number of people
+                    const peopleCount = parseInt(people);
+                    if (isNaN(peopleCount) || peopleCount < 1 || peopleCount > 10) {
+                        alert('Please enter a valid number of people (1-10)');
                         return false;
                     }
 

@@ -20,22 +20,6 @@
     <!-- Additional icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
-    <!-- Debug CSS to verify styles are loading -->
-    <style>
-        .css-debug { display: none; }
-        body::after {
-            content: 'CSS Loaded';
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background: #4CAF50;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            z-index: 9999;
-        }
-    </style>
     <title>Wide Ways</title>
 </head>
 
@@ -43,7 +27,7 @@
 
 <header>
         <nav>
-            <h4>Wide ways</h4>
+            <h4><a href="<?= base_url('/');?>" style="text-decoration: none; color: inherit;">Wide ways</a></h4>
             <ul id="menu_bx">
                 <li><a href="<?= base_url('/');?>">Home</a></li>
                 <li><a href="<?= base_url('Welcome/destinations');?>">Destinations</a></li>

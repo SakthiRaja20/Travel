@@ -5,7 +5,7 @@
 
 <!-- Hotel Booking Page -->
 <main class="booking-container">
-    <!-- Left Column: Hotel Details -->
+    <!-- Left Column: Hotel Details and Booking -->
     <div class="hotel-details">
         <!-- Hotel Info Section -->
         <div id="hotelInfo" class="hotel-info">
@@ -31,18 +31,26 @@
                     <!-- Description will be populated by JavaScript -->
                 </div>
             </section>
-            
-            <!-- Location Section -->
-            <section class="location-section">
-                <h4>📍 Location & Map</h4>
-                <div id="hotelMap" class="hotel-map">
-                    <!-- Map will be populated by JavaScript -->
-                </div>
-            </section>
         </div>
+
+        <!-- Booking Summary Section -->
+        <section class="booking-summary-section">
+            <h4>� Booking Summary</h4>
+            <div id="bookingSummary">
+                <!-- Summary will be populated by JavaScript -->
+            </div>
+
+            <!-- Booking Action -->
+            <div class="booking-action">
+                <button type="button" id="bookNowBtn" class="btn-book" disabled>
+                    <span class="btn-text">Select a Room to Continue</span>
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+        </section>
     </div>
 
-    <!-- Right Column: Room Selection and Booking -->
+    <!-- Right Column: Room Selection -->
     <div class="booking-sidebar">
         <!-- Room Selection -->
         <div id="roomSelection" class="room-selection">
@@ -50,19 +58,6 @@
             <div class="room-options">
                 <!-- Room options will be populated by JavaScript -->
             </div>
-        </div>
-        
-        <!-- Booking Summary -->
-        <div id="bookingSummary">
-            <!-- Summary will be populated by JavaScript -->
-        </div>
-
-        <!-- Booking Action -->
-        <div class="booking-action">
-            <button type="button" id="bookNowBtn" class="btn-book" disabled>
-                <span class="btn-text">Select a Room to Continue</span>
-                <i class="bi bi-arrow-right"></i>
-            </button>
         </div>
     </div>
 </main>
@@ -113,7 +108,6 @@
             hotelInfo: '#hotelInfo',
             hotelAmenities: '.hotel-amenities',
             hotelDescription: '#hotelDescription',
-            hotelMap: '#hotelMap',
             roomSelection: '#roomSelection',
             roomOptions: '.room-options',
             bookingSummary: '#bookingSummary',
@@ -200,8 +194,91 @@
     });
 </script>
 
-<!-- Additional styles for error/success messages -->
 <style>
+    /* Main container background */
+    .booking-container {
+        background-color: #eef2f6;
+        padding: 25px;
+    }
+
+    /* Hotel details section styling */
+    .hotel-details {
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 25px;
+    }
+
+    /* Hotel info section */
+    .hotel-info {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #e9ecef;
+    }
+
+    /* Hotel description sections */
+    .amenities-section,
+    .description-section {
+        background-color: #f8fafc;
+        border-radius: 12px;
+        padding: 25px;
+        margin: 0 0 20px 0;
+        border: 1px solid #e9ecef;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    /* Section headings */
+    .amenities-section h4,
+    .description-section h4,
+    .booking-summary-section h4 {
+        color: #1a202c;
+        font-size: 1.25rem;
+        margin-bottom: 1.25rem;
+        font-weight: 600;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 12px;
+    }
+
+    /* Booking summary section - most important, so highest contrast */
+    .booking-summary-section {
+        background: linear-gradient(145deg, #ffffff 0%, #f7fafc 100%);
+        border-radius: 12px;
+        padding: 25px;
+        margin: 25px 0;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Room options styling */
+    .room-options {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Amenities list styling */
+    .hotel-amenities {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .hotel-amenities li {
+        background-color: #ffffff;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
     .error-message {
         position: fixed;
         top: 80px;
