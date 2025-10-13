@@ -221,7 +221,7 @@
         const endDate = tomorrow.toISOString().split('T')[0];
         
         // Redirect to result page with pre-filled destination
-        window.location.href = `<?php echo base_url('Welcome/result');?>?${city}?${startDate}?${endDate}?2`;
+        window.location.href = `<?php echo base_url('Welcome/result');?>?city=${encodeURIComponent(city)}&checkin=${encodeURIComponent(startDate)}&checkout=${encodeURIComponent(endDate)}&guests=2`;
     }
 
     // Quick search function
@@ -247,7 +247,7 @@
         }
 
         // Redirect to result page
-        window.location.href = `<?php echo base_url('Welcome/result');?>?${destination}?${startDate}?${endDate}?${people}`;
+        window.location.href = `<?php echo base_url('Welcome/result');?>?city=${encodeURIComponent(destination)}&checkin=${encodeURIComponent(startDate)}&checkout=${encodeURIComponent(endDate)}&guests=${encodeURIComponent(people)}`;
     }
 
     // Set minimum date for date inputs to today

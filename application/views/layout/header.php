@@ -5,10 +5,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Third-party CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="<?= base_url('assets/style.css');?>">
-    <link rel="stylesheet" href="<?= base_url('assets/media.css');?>">
+    
+    <!-- Base styles -->
+    <link rel="stylesheet" href="<?= base_url('assets/style.css');?>" id="base-css">
+    <link rel="stylesheet" href="<?= base_url('assets/media.css');?>" id="media-css">
+    
+    <!-- Page specific styles -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/booking.css');?>" id="booking-css">
+    <link rel="stylesheet" href="<?= base_url('assets/css/room-booking.css');?>" id="room-booking-css">
+    <link rel="stylesheet" href="<?= base_url('assets/css/order.css');?>" id="order-css">
+    
+    <!-- Additional icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Debug CSS to verify styles are loading -->
+    <style>
+        .css-debug { display: none; }
+        body::after {
+            content: 'CSS Loaded';
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 9999;
+        }
+    </style>
     <title>Wide Ways</title>
 </head>
 

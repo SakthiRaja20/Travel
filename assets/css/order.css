@@ -1,0 +1,334 @@
+.bookings-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 80vh;
+}
+.booking-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    padding: 25px;
+    position: relative;
+    border: 1px solid #eee;
+}
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+.booking-hotel {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #037b83;
+    margin-bottom: 5px;
+}
+.booking-location {
+    color: #666;
+    font-size: 1.1em;
+}
+.booking-dates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    justify-content: space-around;
+}
+.booking-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+.booking-status {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: 0.95em;
+}
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+.status-confirmed {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.booking-details > div {
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+.booking-details strong {
+    color: #666;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+/* Hotel Book Styles */
+.hotelBook {
+    min-height: 60vh;
+}
+
+.hotelBook .hotelContent .rightRating h5 {
+    white-space: nowrap;
+    width: 80%;
+    margin: 7px 0;
+    box-shadow: 0 0 20px rgb(0,0,0,.08);
+    padding: 18px;
+    border-radius: 10px;
+}
+
+.hotelBook .hotelContent .rightRating h5 span {
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgb(0,0,0,.08);
+    padding: 9px 22px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.hotelBook .contentSec {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hotelBook .contentSec .contentSecLeft {
+    width: calc(100% - 250px);
+}
+
+.hotelBook .contentSec .contentSecLeft .hotelAmenities {
+    display: flex;
+    align-items: center;
+}
+
+.hotelBook .contentSec .contentSecLeft .hotelAmenities li {
+    margin: 0 10px;
+}
+
+.hotelBook .contentSec .contentSecRight {
+    width: 250px;
+}
+
+.hotelBook .contentSec .contentSecRight iframe {
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgb(0,0,0,.08);
+    width: 90%;
+    height: 200px;
+    float: right;
+    margin-top: 20px;
+}
+
+/* Booking Details */
+.hotelBook .bookingDetails {
+    padding: 20px;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.hotelBook .bookingDetails .hotelBookContent {
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.hotelBook .bookingDetails .hotelBookContent img {
+   width: 90px;
+   height: 90px;
+   border-radius: 15px;
+   box-shadow: 0 0 20px rgb(0,0,0,.1);
+}
+
+.hotelBook .bookingDetails .hotelBookContent .contents h4,
+.hotelBook .bookingDetails .hotelBookContent .contents h5,
+.hotelBook .bookingDetails .hotelBookContent .contents h6 {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.hotelBook .bookingDetails .hotelBookContent .contents h5 i {
+    color: orange;
+}
+
+.hotelBook .bookingDetails .hotelBookContent .contents h5 span {
+    padding: 2px 14px;
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #8d8d8d;
+    background: #fff;
+    margin: 0 15px;
+}
+
+/* Check-in/out Section */
+.hotelBook .bookingDetails .hotelBookCheckIN-out {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: #f2f2f26b;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    margin-top: 15px;
+}
+
+.hotelBook .bookingDetails .hotelBookCheckIN-out .checkIN {
+    margin-right: 10px;
+    padding: 14px 17px;
+    white-space: nowrap;
+}
+
+.hotelBook .bookingDetails .hotelBookCheckIN-out .checkIN label,
+.hotelBook .bookingDetails .hotelBookCheckIN-out .checkIN p {
+    font-size: 13px;
+}
+
+.hotelBook .bookingDetails .hotelBookCheckIN-out .checkIN h6 {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 5px 0;
+}
+
+.hotelBook .bookingDetails .hotelBookCheckIN-out .checkIN h6 span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.hotelBook .bookingDetails .hotelBookCheckIN-out .night {
+    padding: 2px 14px;
+    border: 1px solid lightgrey;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #8d8d8d;
+    background: #fff;
+    margin: 0 15px;
+    white-space: nowrap;
+}
+
+.hotelBook .bookingDetails .hotelBookCheckIN-out .checkIN2 span {
+    color: #2f2f2f;
+}
+
+.hotelBook .bookingDetails .hotelBookCheckIN-out .checkIN2 span b {
+    color: #000;
+}
+
+.hotelBook .bookingDetails .hotelBookCheckIN-out .checkIN2 span:nth-child(2) {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    margin: 0 15px;
+    padding: 0 15px;
+}
+
+/* Empty State Styles */
+.empty-bookings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    min-height: 50vh;
+}
+
+.empty-bookings > i {
+    font-size: 6rem;
+    color: #037b83;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+    display: block;
+}
+
+.empty-bookings > i.bi-calendar-x,
+.empty-bookings > i.bi-exclamation-triangle {
+    font-size: 6rem;
+    color: #037b83;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+.empty-bookings h3 {
+    font-size: 1.8rem;
+    color: #2f2f2f;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.empty-bookings p {
+    font-size: 1rem;
+    color: #8d8d8d;
+    margin-bottom: 2rem;
+    max-width: 400px;
+}
+
+.empty-bookings .explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 40px;
+    margin-top: 30px;
+    font-size: 17px;
+    background: linear-gradient(135deg, #037b83 0%, #02565d 100%);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    box-shadow: 0 8px 20px rgba(3, 123, 131, 0.3);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+}
+
+.empty-bookings .explore-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.empty-bookings .explore-btn:hover::before {
+    left: 100%;
+}
+
+.empty-bookings .explore-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(3, 123, 131, 0.4);
+}
+
+.empty-bookings .explore-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(3, 123, 131, 0.3);
+}
+
+.empty-bookings .explore-btn i {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.empty-bookings .explore-btn:hover i {
+    transform: rotate(20deg) scale(1.1);
+}

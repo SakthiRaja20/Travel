@@ -620,7 +620,7 @@
         const startDate = today.toISOString().split('T')[0];
         const endDate = tomorrow.toISOString().split('T')[0];
         
-        window.location.href = `<?php echo base_url('Welcome/result');?>?${city}?${startDate}?${endDate}?2`;
+        window.location.href = `<?php echo base_url('Welcome/result');?>?city=${encodeURIComponent(city)}&checkin=${encodeURIComponent(startDate)}&checkout=${encodeURIComponent(endDate)}&guests=2`;
     }
 </script>
 

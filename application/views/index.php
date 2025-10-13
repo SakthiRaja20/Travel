@@ -45,7 +45,7 @@
                     submit.addEventListener('click' , () => {
                         if (destination.value != '' && startDate.value != '' && endDate.value != '' && people.value != '') {
                             let a = document.createElement('a');
-                            a.href = `<?php echo base_url('Welcome/result');?>?${destination.value}?${startDate.value}?${endDate.value}?${people.value}`;
+                            a.href = `<?php echo base_url('Welcome/result');?>?city=${encodeURIComponent(destination.value)}&checkin=${encodeURIComponent(startDate.value)}&checkout=${encodeURIComponent(endDate.value)}&guests=${encodeURIComponent(people.value)}`;
                             a.click();
                         } else {
                             alert('Please Fill all inputs')
@@ -61,7 +61,7 @@
                         const startDate = today.toISOString().split('T')[0];
                         const endDate = tomorrow.toISOString().split('T')[0];
                         
-                        window.location.href = `<?php echo base_url('Welcome/result');?>?${city}?${startDate}?${endDate}?2`;
+                        window.location.href = `<?php echo base_url('Welcome/result');?>?city=${encodeURIComponent(city)}&checkin=${encodeURIComponent(startDate)}&checkout=${encodeURIComponent(endDate)}&guests=2`;
                     }
                 </script>
         </div>
