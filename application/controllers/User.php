@@ -104,9 +104,42 @@ class User extends CI_Controller {
 			return;
 		}
 
-		// Regular user login - only hash password if it's not empty
+		// Regular user login
 		$hashedPassword = md5($password);
+		
+		// Get user data
 		$query = "SELECT * FROM users WHERE mobile = ? AND password = ?";
+		$result = $this->db->query($query, array($mobile, $hashedPassword))->row_array();
+
+		if (!$result) {
+			// For debugging
+			log_message('debug', 'Login failed for mobile: ' . $mobile);
+			log_message('debug', 'Hashed password: ' . $hashedPassword);
+			
+			echo json_encode([
+				"status" => "error",
+				"message" => "Invalid mobile number or password"
+			]);
+			return;
+		}
+
+		// Set up user session data
+		$userData = [
+			'id' => $result['id'],
+			'name' => $result['name'],
+			'mobile' => $result['mobile'],
+			'is_admin' => false
+		];
+
+		// Store user data in session
+		$this->session->set_userdata('userdata', $userData);
+
+		echo json_encode([
+			"status" => "success",
+			"message" => "Login successful",
+			"is_admin" => false
+		]);
+		return;
 
 		$result = $this->db->query($query , array($mobile , $password))->row_array();
 

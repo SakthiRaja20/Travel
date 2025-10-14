@@ -430,6 +430,10 @@
         const passwordInput = document.getElementById('login_password');
         const button = event.target.closest('.demo-btn');
         
+        // Clear any existing values
+        mobileInput.value = '';
+        passwordInput.value = '';
+        
         // Add loading state
         button.classList.add('loading');
         button.innerHTML = '<h4>🔄 Logging in...</h4><p>Please wait...</p>';
